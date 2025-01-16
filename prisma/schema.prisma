@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  phone     String   @unique
+  email     String   @unique
+  hash      String
+  role      Role
+  Store     Store?
+  Client    Client?
+  StoreId   String?
+}
+
+model Client {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  User        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String        @unique @db.ObjectId
+  name        String
+  tag         String
+  birthday    String?
+  LoyaltyCard LoyaltyCard[]
+  Store       Store?        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId     String?       @db.ObjectId
+}
+
+model Store {
+  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+  User                User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String     @unique @db.ObjectId
+  PlanStore           PlanStore?
+  tag                 String     @unique
+  name                String     @unique
+  amountLoyaltyByCard Int?
+  reward              String?
+  bgColor             String?
+  textColor           String?
+  cooldown            Int        @default(0)
+  img                 String?
+  ready               Boolean    @default(false)
+  Products            Product[]
+  Clients             Client[]
+}
+
+model LoyaltyCard {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  active      Boolean   @default(true)
+  loyaltys    Loyalty[]
+  Client      Client?   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId    String?   @db.ObjectId
+  amount      Int?      @default(0)
+  reward      String?
+  createdAt   DateTime
+  nextLoyalty DateTime?
+}
+
+model Loyalty {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  LoyaltyCard     LoyaltyCard?      @relation(fields: [loyaltyCardId], references: [id], onDelete: Cascade)
+  loyaltyCardId   String?           @db.ObjectId
+  LoyaltyProducts LoyaltyProducts[]
+  createdAt       DateTime
+}
+
+model LoyaltyProducts {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.ObjectId
+  amount    Int
+  loyalty   Loyalty @relation(fields: [loyaltyId], references: [id], onDelete: Cascade)
+  loyaltyId String  @db.ObjectId
+}
+
+model Product {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  Store           Store?            @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId         String?           @db.ObjectId
+  name            String
+  description     String?
+  price           Int
+  LoyaltyProducts LoyaltyProducts[]
+}
+
+model PlanStore {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  Plan             Plan     @relation(fields: [planId], references: [id])
+  planId           String   @db.ObjectId
+  amountClientsUse Int      @default(0)
+  updateAt         DateTime @default(now())
+  storeId          String   @unique @db.ObjectId
+  Store            Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+
+model Plan {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  title         Score
+  amountClients Int
+  isCustom      Boolean?    @default(false)
+  PlanStore     PlanStore[]
+}
+
+enum Role {
+  STORE
+  CLIENT
+}
+
+enum Score {
+  Bronze
+  Silver
+  Gold
+  Custom
+}
