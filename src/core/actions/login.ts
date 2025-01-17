@@ -68,7 +68,7 @@ export const registerStore = async ({
         throw new Error("Usuário já cadastrado");
       }
 
-      const store = await conn.store.findFirst({
+      const existStore = await conn.store.findFirst({
         where: {
           tag: {
             equals: createTag,
@@ -76,9 +76,17 @@ export const registerStore = async ({
         },
       });
 
-      if (store) {
+      if (existStore) {
         throw new Error("Loja já cadastrada");
       }
+
+      const store = await conn.store.findFirst({
+        where: {
+          tag: {
+            equals: createTag,
+          },
+        },
+      });
 
       const generateHash = await encrypt(password);
 
@@ -93,6 +101,7 @@ export const registerStore = async ({
       const generatePlanStore = await conn.planStore.create({
         data: {
           planId: freePlan.id,
+          storeId: store?.id as string,
         },
       });
 
