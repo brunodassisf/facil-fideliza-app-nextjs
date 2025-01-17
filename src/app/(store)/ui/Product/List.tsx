@@ -51,20 +51,6 @@ const List: React.FC<ListProps> = ({ data }) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (selectProduct && products) {
-      const initial = products?.find((item) => item.value === selectProduct)
-        ?.data as Product;
-      setFieldValue("id", initial?.id);
-      setFieldValue("name", initial?.name);
-      setFieldValue("description", initial?.description);
-      setFieldValue(
-        "price",
-        VMasker.toMoney(initial?.price as number, maskerMoney)
-      );
-    }
-  }, [selectProduct]);
-
   const handleUpdated = async (
     values: IInitialValues,
     formikHelpers: FormikHelpers<IInitialValues>
@@ -86,6 +72,20 @@ const List: React.FC<ListProps> = ({ data }) => {
       validationSchema,
       onSubmit: handleUpdated,
     });
+
+  useEffect(() => {
+    if (selectProduct && products) {
+      const initial = products?.find((item) => item.value === selectProduct)
+        ?.data as Product;
+      setFieldValue("id", initial?.id);
+      setFieldValue("name", initial?.name);
+      setFieldValue("description", initial?.description);
+      setFieldValue(
+        "price",
+        VMasker.toMoney(initial?.price as number, maskerMoney)
+      );
+    }
+  }, [selectProduct, products, setFieldValue]);
 
   const handleDeleteProduct = async () => {
     setIsLoading(true);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// import moment from "moment";
+import moment from "moment";
 import { Typography } from "@mui/material";
 
 type CountdownTimerProps = {
@@ -25,15 +25,15 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ data }) => {
         }
         setEndCount(false);
         const dataSemZ = data?.replace(/\.000Z$/, "");
-        // const agora = moment().local();
-        // const futuro = moment(dataSemZ).utc();
-        // const diferenca = futuro.diff(agora);
-        // const horas = Math.floor(diferenca / (60 * 60 * 1000));
-        // const minutos = Math.floor(
-        //   (diferenca % (60 * 60 * 1000)) / (60 * 1000)
-        // );
-        // const segundos = Math.floor((diferenca % (60 * 1000)) / 1000);
-        // setTempoRestante(`${horas}h ${minutos}m ${segundos}s`);
+        const agora = moment().local();
+        const futuro = moment(dataSemZ).utc();
+        const diferenca = futuro.diff(agora);
+        const horas = Math.floor(diferenca / (60 * 60 * 1000));
+        const minutos = Math.floor(
+          (diferenca % (60 * 60 * 1000)) / (60 * 1000)
+        );
+        const segundos = Math.floor((diferenca % (60 * 1000)) / 1000);
+        setTempoRestante(`${horas}h ${minutos}m ${segundos}s`);
       }, 1000);
       return () => clearInterval(intervalId);
     }

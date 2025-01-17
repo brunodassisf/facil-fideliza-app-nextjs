@@ -78,7 +78,7 @@ const Register: React.FC = () => {
 
           <Input
             fullWidth
-            label="Nome da Loja"
+            label="Nome"
             value={values.name}
             name="name"
             onChange={handleChange}
