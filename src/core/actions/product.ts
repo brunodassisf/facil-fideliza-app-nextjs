@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
-import { getSession } from "./session";
 
 export type Product = {
   storeId: string | null;
@@ -97,14 +96,14 @@ export const deleteProduct = async (id: string) => {
   }
 };
 
-export const getProducts = async (): Promise<ListProductDto[] | null> => {
+export const getProducts = async (
+  id: string
+): Promise<ListProductDto[] | null> => {
   try {
-    const session = await getSession();
-
     const products = await prisma.product.findMany({
       where: {
         Store: {
-          userId: session?.id as string,
+          userId: id,
         },
       },
     });

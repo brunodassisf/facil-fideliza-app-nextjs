@@ -36,7 +36,7 @@ const WrapperTag: React.FC<WrapperStoreProps> = ({ children, data }) => {
 
   return (
     <WrapperTagCtx.Provider value={{ tag }}>
-      <StyleTag bgColor={tag?.bgColor} textColor={tag?.textColor} />
+      <StyleTag bgColor={tag?.bgColor || ""} textColor={tag?.textColor || ""} />
       {children}
     </WrapperTagCtx.Provider>
   );
