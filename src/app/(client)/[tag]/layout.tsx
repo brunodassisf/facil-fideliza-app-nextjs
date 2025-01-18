@@ -2,6 +2,11 @@ import { getStoreByTag } from "@/core/actions/store";
 import { NotFoundStore, WrapperTag } from "@/presentation/components";
 import type { Metadata, Viewport } from "next";
 
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ tag: string }>;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -37,13 +42,7 @@ export async function generateViewport({
   };
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ tag: string }>;
-}) {
+export default async function RootLayout({ children, params }: LayoutProps) {
   const { tag } = await params;
   const store = await getStoreByTag(tag);
 
