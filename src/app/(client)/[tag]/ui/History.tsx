@@ -26,7 +26,7 @@ const History: React.FC<HistoryProps> = ({ data }) => {
   return (
     <>
       <div className="mt-5">
-        <div className="mt-5 max-h-80 overflow-y-scroll">
+        <div className="my-5 max-h-80 overflow-y-scroll">
           {data && data?.length > 0 ? (
             data?.map((loyaltyCard) => (
               <div key={loyaltyCard?.id} className="border-2 rounded mb-2 p-2">
@@ -72,7 +72,7 @@ const History: React.FC<HistoryProps> = ({ data }) => {
           ) : (
             <Typography
               variant="subtitle2"
-              className="bg-yellow-300 p-2 rounded"
+              className="bg-yellow-200 p-2 rounded"
             >
               Você ainda não possui cartões completados, compre e comece já!
             </Typography>
