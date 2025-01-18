@@ -1,6 +1,7 @@
 "use client";
 
 import { logoutSession } from "@/core/actions/session";
+import { useTag } from "@/core/context/WrapperTag";
 import {
   Drawer,
   List,
@@ -14,11 +15,11 @@ import { FaBars, FaXmark } from "react-icons/fa6";
 
 type SidebarProps = {
   type: "store" | "client";
-  tag?: string;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
+const Sidebar: React.FC<SidebarProps> = ({ type }) => {
   const router = useRouter();
+  const { tag } = useTag();
   const [open, setOpen] = useState<boolean>(false);
 
   const options: {
@@ -63,15 +64,15 @@ const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
     client: [
       {
         name: "Meu cartão",
-        link: `/${tag}/meu-cartao`,
+        link: `/${tag?.tag || ""}/meu-cartao`,
       },
       {
         name: "Ultimas fidelizações",
-        link: `/${tag}/meu-cartao/historico`,
+        link: `/${tag?.tag || ""}/meu-cartao/historico`,
       },
       {
         name: "Deletar conta",
-        link: `/${tag}/meu-cartao/deletar-conta`,
+        link: `/${tag?.tag || ""}/meu-cartao/deletar-conta`,
         color: "text-red-500",
       },
       {

@@ -24,7 +24,7 @@ export default async function RootLayout({
             {session.storeName}
           </Typography>
         </div>
-        <Sidebar type="client" tag={session.storeName} />
+        <Sidebar type="client" />
       </div>
       <div className="bg-white h-full rounded-xl pt-4 text-stone-900">
         <div className="px-4">{children}</div>
