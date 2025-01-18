@@ -10,7 +10,7 @@ interface LayoutProps {
 export async function generateMetadata({
   params,
 }: {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }): Promise<Metadata> {
   const { tag } = await params;
   const store = await getStoreByTag(tag);
@@ -33,7 +33,7 @@ export async function generateMetadata({
 export async function generateViewport({
   params,
 }: {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }): Promise<Viewport> {
   const { tag } = await params;
   const store = await getStoreByTag(tag);
