@@ -6,6 +6,7 @@ import { Provider } from "@/presentation/components";
 const NunitoFont = Nunito({
   variable: "--font-Nunito-sans",
   subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -13,9 +14,7 @@ export const metadata: Metadata = {
   description:
     "Plataforma inovadora para lojistas fidelizarem clientes com facilidade. Ofereça vantagens exclusivas, acompanhe o engajamento e fortaleça o relacionamento com participantes. Simplifique a gestão de fidelidade e aumente a retenção com ferramentas intuitivas e eficazes.",
   openGraph: {
-    images: [
-      "https://fideliza-facil.s3.us-east-2.amazonaws.com/facilfidelizar.png",
-    ],
+    images: [`${process.env.NEXT_PUBLIC_URL_BASE_AWS}facilfidelizar.png`],
   },
 };
 

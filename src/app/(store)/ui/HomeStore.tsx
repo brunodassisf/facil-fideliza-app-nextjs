@@ -53,7 +53,7 @@ export default function HomeStore() {
               <Image
                 width={100}
                 height={100}
-                src={process.env.NEXT_PUBLIC_URL_BASE_IMAGE! + store?.img}
+                src={process.env.NEXT_PUBLIC_URL_BASE_AWS! + store?.img}
                 alt="logo"
                 className="w-full h-full object-cover"
                 priority={true}

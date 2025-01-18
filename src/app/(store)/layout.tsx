@@ -5,11 +5,11 @@ import type { Metadata, Viewport } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const store = await getStore();
   const img = store.img
-    ? process.env.NEXT_PUBLIC_URL_BASE_IMAGE! + store.img
-    : "";
+    ? process.env.NEXT_PUBLIC_URL_BASE_AWS! + store.img
+    : process.env.NEXT_PUBLIC_URL_BASE_AWS! + "facilfidelizar.png";
 
   return {
-    title: `${store.name}, Bem-vindo`,
+    title: `${store.name} - Bem-vindo`,
 
     openGraph: {
       url: `${process.env.NEXT_PUBLIC_URL_APP}/loja`,
@@ -62,12 +62,6 @@ export default async function RootLayout({
           </div>
           <div className="flex flex-col items-end justify-around h-full">
             <Sidebar type="store" />
-            {/* <Button
-              bgColor={store?.Store.bgColor}
-              textColor={store?.Store.textColor}
-            >
-              <FaRotate size={20} onClick={() => refetch()} />
-            </Button> */}
           </div>
         </div>
         <div className="bg-white h-full rounded-t-lg pt-4 px-4 overflow-y-scroll text-stone-900 pb-5">

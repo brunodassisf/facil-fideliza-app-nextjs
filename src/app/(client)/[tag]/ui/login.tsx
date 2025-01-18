@@ -53,7 +53,7 @@ const Login: React.FC = () => {
           height={100}
           src="/logo.png"
           alt="logo"
-          className="object-contain"
+          className="w-auto h-auto"
           priority={true}
         />
 

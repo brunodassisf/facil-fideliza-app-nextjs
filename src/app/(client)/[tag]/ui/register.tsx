@@ -66,7 +66,8 @@ const Register: React.FC = () => {
           width={100}
           height={100}
           alt="logo"
-          className="object-contain"
+          className="w-auto h-auto"
+          priority={true}
         />
 
         <h5 className="text-3xl font-semibold">Fácil Fideliza</h5>
