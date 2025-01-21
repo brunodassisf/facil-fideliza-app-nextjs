@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/presentation/components";
+import PolityCookies from "./ui/PolityCookies";
 
 const NunitoFont = Nunito({
   variable: "--font-Nunito-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
 
       <body className={`${NunitoFont.variable}`}>
         <Provider>{children}</Provider>
+        <PolityCookies />
       </body>
     </html>
   );

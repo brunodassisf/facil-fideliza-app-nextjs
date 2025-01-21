@@ -10,8 +10,12 @@ const StyleTag: React.FC<{
             color: ${textColor || "#000"};
           }
 
+          .bg-tag {
+            background-color: ${bgColor || "#83cbff"} !important;
+          }
+
           .text-tag {
-            color: ${bgColor || "#000"};
+            color: ${bgColor || "#000"} !important;
           }
 
           .bg-tag {

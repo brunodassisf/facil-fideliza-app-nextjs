@@ -15,17 +15,12 @@ export async function generateMetadata({
   const { tag } = await params;
   const store = await getStoreByTag(tag);
 
-  const img = store?.img
-    ? process.env.NEXT_PUBLIC_URL_BASE_AWS! + store.img
-    : process.env.NEXT_PUBLIC_URL_BASE_AWS! + "facilfidelizar.png";
-
   return {
     title: `${store?.name} - Fidelidade`,
     description: `Participe e ganhe vantagens exclusivas com a ${store?.name}!`,
     openGraph: {
       url: `${process.env.NEXT_PUBLIC_URL_APP}${store?.tag}`,
       description: `Participe e ganhe vantagens exclusivas com a ${store?.name}!`,
-      images: [img],
     },
   };
 }
