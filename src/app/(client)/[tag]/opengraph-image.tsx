@@ -1,5 +1,6 @@
 import { getStoreByTag } from "@/core/actions/store";
 import { ImageResponse } from "next/og";
+import { FaGifts } from "react-icons/fa6";
 
 export const size = {
   width: 1200,
@@ -26,7 +27,7 @@ export default async function Image({ params }: { params: { tag: string } }) {
           color: store.textColor || "",
         }}
       >
-        {store.name}
+        <FaGifts style={{ color: store.textColor || "#000" }} />
       </div>
     ),
     {

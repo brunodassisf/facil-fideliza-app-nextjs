@@ -1,9 +1,22 @@
+"use client";
+
+import { Button } from "@/presentation/components";
 import { Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <div className="bg-slate-100">
-      <div className="container mx-auto pt-20">
+      <div className="container mx-auto pt-10 px-4">
+        <Button onClick={handleBack} variant="outlined" className="mb-10">
+          Voltar
+        </Button>
         <Typography variant="h4" className="pb-4" fontWeight={700}>
           Política de Privacidade - LGPD
         </Typography>
