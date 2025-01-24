@@ -46,16 +46,13 @@ const Login: React.FC = () => {
       {isLoading && <ProgressBar />}
 
       <div className="flex flex-col justify-center items-center pt-10 gap-y-4 pb-5 text-blue-900 lg:max-w-2xl md:m-auto px-4">
-        <div className="w-48 h-48 rounded-full overflow-hidden flex items-center justify-center shadow-md">
-          <Image
-            width={100}
-            height={100}
-            src="/logo.png"
-            alt="logo"
-            className="w-full h-full object-contain"
-            priority={true}
-          />
-        </div>
+        <Image
+          width={150}
+          height={150}
+          priority={true}
+          src="/logo.svg"
+          alt="logo"
+        />
         <h5 className="text-3xl font-semibold">Fácil Fidelizar</h5>
         <form
           onSubmit={handleSubmit}

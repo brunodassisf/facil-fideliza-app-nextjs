@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+
+azul: #004aad
+verde: #00bf63
+cinza: #ededed
+
+*/
+
 .progress {
   animation: progress 1s infinite linear;
 }
@@ -33,9 +41,18 @@
   animation: fade-in 2s ease-in-out forwards;
 }
 
-* {
-  font-family: "Nunito" !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+strong {
+  font-family: var(--font-Nunito-sans);
 }
+
 .slick-prev {
   left: 0px;
 }
@@ -45,9 +62,20 @@
 }
 
 .bg-tag {
-  background-color: #83cbff;
+  background-color: #ededed !important;
 }
 
 .text-tag {
-  color: #000;
+  color: #004aad;
+}
+
+.btn {
+  background-color: #004aad !important;
+  color: #ffffff;
+}
+
+.btn-outlined {
+  border: 1px solid #004aad !important;
+  background-color: #ffffff;
+  color: #ffffff;
 }

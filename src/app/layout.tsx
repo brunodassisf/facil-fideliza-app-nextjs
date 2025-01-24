@@ -40,7 +40,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body className={`${NunitoFont.variable}`}>
+      <body className={`${NunitoFont.variable} bg-tag`}>
         <Provider>{children}</Provider>
         <PolityCookies />
       </body>

@@ -32,6 +32,10 @@ export const signUpSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password")], "As senhas devem ser iguais")
     .required("Confirme sua senha"),
+  isChecked: yup
+    .bool()
+    .required("Aceite os termos de uso")
+    .oneOf([true], "Aceite os termos de uso"),
 });
 
 export const signIpSchema = yup.object().shape({

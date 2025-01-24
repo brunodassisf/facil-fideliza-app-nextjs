@@ -93,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ type }) => {
     } else {
       await logoutSession().finally(() => {
         if (tag) {
-          router.push(`/${tag}`);
+          router.push(`/${tag.tag}`);
           return;
         }
         router.push("/");

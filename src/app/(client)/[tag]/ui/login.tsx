@@ -4,15 +4,15 @@ import { Divider } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 
-import VMasker from "vanilla-masker";
+import { credentials } from "@/core/actions/credential";
+import { useTag } from "@/core/context/WrapperTag";
 import { signIpSchema as validationSchema } from "@/core/validation";
 import { Button, Input, ProgressBar } from "@/presentation/components";
-import Image from "next/image";
+import StoreLogo from "@/presentation/components/StoreLogo";
 import Link from "next/link";
-import { credentials } from "@/core/actions/credential";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useTag } from "@/core/context/WrapperTag";
+import VMasker from "vanilla-masker";
 
 const initialValues = {
   phone: "",
@@ -48,15 +48,7 @@ const Login: React.FC = () => {
       {isLoading && <ProgressBar />}
 
       <div className="flex flex-col justify-center items-center pt-10 gap-y-4 pb-5 lg:max-w-2xl md:m-auto px-4">
-        <Image
-          width={100}
-          height={100}
-          src="/logo.png"
-          alt="logo"
-          className="w-auto h-auto"
-          priority={true}
-        />
-
+        <StoreLogo />
         <h5 className="text-3xl font-semibold">{tag?.name}</h5>
         <form
           onSubmit={handleSubmit}

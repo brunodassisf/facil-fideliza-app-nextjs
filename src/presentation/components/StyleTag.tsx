@@ -15,22 +15,26 @@ const StyleTag: React.FC<{
           }
 
           .text-tag {
-            color: ${bgColor || "#000"} !important;
+            color: ${textColor || "#000"} !important;
+          }
+
+          .border-tag {
+            border-color: ${textColor || "#000"} !important;
           }
 
           .bg-tag {
-            background-color: ${bgColor || "#83cbff"};
+            background-color: ${bgColor || "#83cbff"} !important;
           }
           
           .btn {
-            background-color: ${bgColor || "#83cbff"};
+            background-color: ${bgColor || "#83cbff"} !important;
             color: ${textColor || "#000"};
           }
 
           .btn-outlined {
-            border: 1px solid ${bgColor || "#83cbff"};
-            background-color: #ffffff;
-            color: ${bgColor || "#83cbff"};
+            border: 1px solid ${bgColor || "#83cbff"} !important;
+            background-color: #ffffff !important;
+            color: ${bgColor || "#83cbff"} !important;
           }
         `}
     </style>

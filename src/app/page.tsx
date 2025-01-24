@@ -93,8 +93,14 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="w-full">
-        <section className="h-screen flex flex-col items-center justify-center  px-4 bg-sky-100 w-full">
-          <Image height={80} src="/logo.png" alt="logo" width={80} />
+        <section className="h-screen flex flex-col items-center justify-center  px-4 w-full">
+          <Image
+            width={150}
+            height={150}
+            priority={true}
+            src="/logo.svg"
+            alt="logo"
+          />
           <div className="flex flex-col items-center gap-3 mt-10">
             <h1 className="text-3xl font-semibold text-sky-900">
               Fácil fidelizar
@@ -113,7 +119,7 @@ const Home: React.FC = () => {
             </Button>
           </div>
         </section>
-        <section id="sobre" className="h-screen px-4 bg-sky-200 pt-5">
+        <section id="sobre" className="h-screen px-4 bg-white pt-5">
           <h3 className="text-2xl text-center font-semibold text-sky-900 pb-5">
             Conheça o App
           </h3>
@@ -124,8 +130,8 @@ const Home: React.FC = () => {
                   <Image
                     src={`/imagens/${item.img}.png`}
                     alt="logo"
-                    className="w-56 border-4 border-sky-900/20 rounded-2xl"
-                    width={80}
+                    className=" border-4 border-sky-900/20 rounded-2xl"
+                    width={200}
                     height={80}
                   />
                   <div className="mx-8 py-5 text-center md:w-72">

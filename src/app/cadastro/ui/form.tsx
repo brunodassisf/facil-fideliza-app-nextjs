@@ -1,6 +1,13 @@
 "use client";
 
-import { Divider, TextField } from "@mui/material";
+import {
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  TextField,
+} from "@mui/material";
 import { useFormik } from "formik";
 import VMasker from "vanilla-masker";
 import { Button, Input, ProgressBar } from "@/presentation/components";
@@ -19,6 +26,7 @@ const initialValues = {
   email: "",
   password: "",
   passwordConfirmation: "",
+  isChecked: false,
 };
 
 type IInitialValues = typeof initialValues;
@@ -29,7 +37,12 @@ const Register: React.FC = () => {
 
   const handleCreateAccount = async (values: IInitialValues) => {
     setIsLoading(true);
-    await registerStore(values)
+    await registerStore({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      phone: values.phone,
+    })
       .then((res) => {
         toast.success(res?.message);
         route.push("/loja");
@@ -47,19 +60,28 @@ const Register: React.FC = () => {
       onSubmit: handleCreateAccount,
     });
 
+  const renderPolitcsLabel = () => {
+    return (
+      <div>
+        Concordo com a
+        <Link className="ml-1 underline" href="/politica-de-privacidade">
+          Política de Privacidade
+        </Link>
+      </div>
+    );
+  };
+
   return (
     <>
       {isLoading && <ProgressBar />}
       <section className="flex flex-col justify-center items-center pt-10 gap-y-4 pb-5 text-blue-900 lg:max-w-2xl md:m-auto px-4">
-        <div className="w-48 h-48 rounded-full overflow-hidden flex items-center justify-center shadow-md">
-          <Image
-            src="/logo.png"
-            width={200}
-            height={200}
-            alt="logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
+        <Image
+          width={150}
+          height={150}
+          priority={true}
+          src="/logo.svg"
+          alt="logo"
+        />
         <h5 className="text-3xl font-semibold">Fácil Fideliza</h5>
         <form
           onSubmit={handleSubmit}
@@ -127,6 +149,25 @@ const Register: React.FC = () => {
                 : ""
             }
           />
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  defaultChecked={false}
+                  value={values.isChecked}
+                  onChange={(ev) =>
+                    setFieldValue("isChecked", ev.target.checked)
+                  }
+                />
+              }
+              label={renderPolitcsLabel()}
+            />
+            {!!errors?.isChecked && touched?.isChecked ? (
+              <FormHelperText className="!text-red-500 pl-8">
+                {errors?.isChecked}
+              </FormHelperText>
+            ) : null}
+          </FormGroup>
           <div className="w-full">
             <Button fullWidth variant="contained" type="submit">
               Cadastrar
