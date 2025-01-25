@@ -1,6 +1,7 @@
 "use client"; // Error boundaries must be Client Components
 
 import { useEffect } from "react";
+import { FaGears } from "react-icons/fa6";
 
 export default function Error({
   error,
@@ -14,9 +15,10 @@ export default function Error({
 
   return (
     <div>
-      <div className="h-screen flex flex-col justify-center items-center">
-        <h3 className="text-5xl font-bold mb-4">Ops</h3>
-        <h5 className="text-xl">{error.message}</h5>
+      <div className="h-screen flex flex-col justify-center items-center px-4 text-center">
+        <FaGears size={48} className="mb-3 text-tag" />
+        <h3 className="text-xl font-bold">Ops, ocorreu um erro inesperado</h3>
+        <h5>Contate o suporte o mais breve possível</h5>
       </div>
     </div>
   );

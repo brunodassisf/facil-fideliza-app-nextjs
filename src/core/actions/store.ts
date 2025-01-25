@@ -53,10 +53,6 @@ export async function getStoreByTag(tag: string) {
     },
   });
 
-  if (!store) {
-    throw new Error("Loja não encontrada");
-  }
-
   return store;
 }
 
