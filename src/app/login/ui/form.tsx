@@ -45,7 +45,7 @@ const Login: React.FC = () => {
     <>
       {isLoading && <ProgressBar />}
 
-      <div className="flex flex-col justify-center items-center pt-10 gap-y-4 pb-5 text-blue-900 lg:max-w-2xl md:m-auto px-4">
+      <div className="flex flex-col justify-center items-center pt-20 gap-y-4 pb-5 text-tag lg:max-w-2xl md:m-auto px-4">
         <Image
           width={150}
           height={150}
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
         <h5 className="text-3xl font-semibold">Fácil Fidelizar</h5>
         <form
           onSubmit={handleSubmit}
-          className="bg-white flex flex-col w-full justify-center items-center gap-y-5 pt-5 px-4 pb-4 rounded-lg drop-shadow"
+          className="bg-white flex flex-col w-full justify-center items-center gap-y-5 pt-5 mt-10 px-4 pb-4 rounded-lg drop-shadow"
         >
           <h6 className="text-center text-stone-700 text-2xl">Login</h6>
           <Input

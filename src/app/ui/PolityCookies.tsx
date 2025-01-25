@@ -26,7 +26,7 @@ export default function PolityCookies() {
   }
 
   return (
-    <div className="flex flex-col justify-start items-start gap-2 px-4 fixed bottom-0 left-0 w-full opacity-0 animate-fade-in drop-shadow-lg py-10 bg-tag rounded-t-2xl">
+    <div className="flex flex-col justify-start items-start gap-2 px-4 fixed bottom-0 left-0 w-full opacity-0 animate-fade-in pb-2 pt-5 bg-tag border-t-4 border-tag">
       <div className="flex gap-4 items-center">
         <FaCookieBite size={24} />
         <h6 className="text-2xl">Este site utiliza cookies</h6>
