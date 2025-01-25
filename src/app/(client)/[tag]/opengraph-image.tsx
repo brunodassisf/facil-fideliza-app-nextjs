@@ -21,12 +21,12 @@ export default async function Image({ params }: { params: { tag: string } }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          border: `15px solid ${store.textColor || "#000"}`,
-          backgroundColor: store.bgColor || "",
-          color: store.textColor || "",
+          border: `15px solid ${store?.textColor || "#000"}`,
+          backgroundColor: store?.bgColor || "",
+          color: store?.textColor || "",
         }}
       >
-        {store.name}
+        {store?.name}
       </div>
     ),
     {
