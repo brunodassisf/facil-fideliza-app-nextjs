@@ -5,9 +5,12 @@ import { Typography } from "@mui/material";
 
 export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ tag: string }>;
 }) {
+  const { tag } = await params;
   const session = await getSession();
 
   return (
@@ -20,7 +23,7 @@ export default async function RootLayout({
           </Typography>
         </div>
         <div className="pt-4">
-          <Sidebar type="client" />
+          <Sidebar type="client" tag={tag} />
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mb-5">

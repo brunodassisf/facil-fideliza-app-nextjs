@@ -50,7 +50,6 @@ const WrapperStoreCtx = createContext<WrapperStoreContextProps | undefined>(
 
 const WrapperStore: React.FC<WrapperStoreProps> = ({ children, data }) => {
   const [store, setData] = useState<WrapperStoreContext | null>(data || null);
-  console.log(store);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -72,7 +71,7 @@ const WrapperStore: React.FC<WrapperStoreProps> = ({ children, data }) => {
 export const useResourceStore = () => {
   const context = useContext(WrapperStoreCtx);
   if (!context) {
-    throw new Error("useStore must be used within a StoreProvider");
+    throw new Error("Erro ao carregar useStore");
   }
   return context;
 };

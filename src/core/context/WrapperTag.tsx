@@ -45,7 +45,7 @@ const WrapperTag: React.FC<WrapperStoreProps> = ({ children, data }) => {
 export const useTag = () => {
   const context = useContext(WrapperTagCtx);
   if (!context) {
-    throw new Error("useStore must be used within a StoreProvider");
+    throw new Error("Erro ao carregar useTag");
   }
   return context;
 };
