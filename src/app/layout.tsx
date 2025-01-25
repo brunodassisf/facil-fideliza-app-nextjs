@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/presentation/components";
@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   openGraph: {
     images: [`${process.env.NEXT_PUBLIC_URL_BASE_AWS}facilfidelizar.png`],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ededed",
 };
 
 export default function RootLayout({
