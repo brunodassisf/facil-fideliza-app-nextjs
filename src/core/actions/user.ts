@@ -95,22 +95,35 @@ export const searchClient = async (storeId: string, phone: string) => {
   }
 };
 
-export const deleteAccount = async (id: string, isStore?: boolean) => {
+export const deleteAccount = async (id: string) => {
   try {
     const result = await prisma.$transaction(async (conn) => {
-      if (isStore) {
-        const store = await conn.store.findFirst({
+      const findUser = await conn.user.findFirst({
+        where: {
+          id,
+        },
+        include: {
+          Client: true,
+          Store: true,
+        },
+      });
+
+      if (findUser?.Client) {
+        await conn.planStore.update({
           where: {
-            userId: id,
+            storeId: findUser.Client.storeId as string,
+          },
+          data: {
+            amountClientsUse: {
+              decrement: 1,
+            },
           },
         });
-
-        await conn.user.deleteMany({ where: { StoreId: store?.id } });
       }
 
-      await conn.user.delete({
-        where: { id },
-      });
+      if (findUser?.Store) {
+        await conn.user.deleteMany({ where: { StoreId: findUser.Store?.id } });
+      }
 
       await logoutSession();
       return { message: "Conta deletada com sucesso" };

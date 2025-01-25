@@ -112,6 +112,7 @@ const Register: React.FC = () => {
             label="Telefone"
             value={values.phone}
             name="phone"
+            type="tel"
             onChange={(ev) =>
               setFieldValue(
                 "phone",
