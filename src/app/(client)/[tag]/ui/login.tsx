@@ -24,16 +24,20 @@ type IInitialValues = typeof initialValues;
 const Login: React.FC = () => {
   const router = useRouter();
   const { tag } = useTag();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [btnBlock, setBtnBlock] = useState<boolean>(false);
 
   const handleCreateAccount = async (values: IInitialValues) => {
     setIsLoading(true);
+    setBtnBlock(true);
     await credentials(values)
       .then(() => {
         router.push(`/${tag?.tag}/meu-cartao`);
       })
-      .catch((res) => toast.error(res.message))
+      .catch((res) => {
+        toast.error(res.message);
+        setBtnBlock(false);
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -81,15 +85,21 @@ const Login: React.FC = () => {
             }
           />
           <div className="w-full">
-            <Button variant="contained" fullWidth type="submit">
+            <Button
+              fullWidth
+              variant="contained"
+              type="submit"
+              disabled={btnBlock}
+            >
               Entrar
             </Button>
             <Divider className="my-2 text-stone-700">ou</Divider>
             <Button
+              fullWidth
               component={Link}
               href={`${tag?.tag}/cadastro`}
               variant="outlined"
-              fullWidth
+              disabled={btnBlock}
             >
               Cadastre-se
             </Button>

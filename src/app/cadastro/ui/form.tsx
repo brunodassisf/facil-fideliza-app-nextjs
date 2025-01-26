@@ -34,8 +34,10 @@ type IInitialValues = typeof initialValues;
 const Register: React.FC = () => {
   const route = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [btnBlock, setBtnBlock] = useState<boolean>(false);
 
   const handleCreateAccount = async (values: IInitialValues) => {
+    setIsLoading(true);
     setIsLoading(true);
     await registerStore({
       email: values.email,
@@ -45,10 +47,12 @@ const Register: React.FC = () => {
     })
       .then((res) => {
         toast.success(res?.message);
+        toast.success("Você será redirecionando para sua loja, aguarde");
         route.push("/loja");
       })
       .catch((err) => {
         toast.error(err?.message);
+        setBtnBlock(false);
       })
       .finally(() => setIsLoading(false));
   };
@@ -170,12 +174,23 @@ const Register: React.FC = () => {
             ) : null}
           </FormGroup>
           <div className="w-full">
-            <Button fullWidth variant="contained" type="submit">
+            <Button
+              fullWidth
+              variant="contained"
+              type="submit"
+              disabled={btnBlock}
+            >
               Cadastrar
             </Button>
             <Divider className="my-2 text-stone-700">ou</Divider>
 
-            <Button component={Link} href="/login" variant="outlined" fullWidth>
+            <Button
+              component={Link}
+              href="/login"
+              variant="outlined"
+              fullWidth
+              disabled={btnBlock}
+            >
               Fazer login
             </Button>
           </div>

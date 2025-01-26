@@ -1,9 +1,8 @@
 "use client";
 
-import { DeletePhoto, Photo, ShareLink } from "@/presentation/components";
 import { useResourceStore } from "@/core/context/WrapperStore";
+import { ShareLink } from "@/presentation/components";
 import { Typography } from "@mui/material";
-import Image from "next/image";
 import Link from "next/link";
 import {
   FaCartFlatbed,
@@ -43,27 +42,6 @@ export default function HomeStore() {
 
   return (
     <div className="mt-2 text-stone-600">
-      <div className="w-full">
-        {store?.img !== null ? (
-          <DeletePhoto>
-            <div
-              className="w-[200px] h-[200px] rounded-full overflow-hidden"
-              style={{ backgroundColor: store?.textColor || "#000000" }}
-            >
-              <Image
-                width={100}
-                height={100}
-                src={process.env.NEXT_PUBLIC_URL_BASE_AWS! + store?.img}
-                alt="logo"
-                className="w-full h-full object-cover"
-                priority={true}
-              />
-            </div>
-          </DeletePhoto>
-        ) : (
-          <Photo />
-        )}
-      </div>
       <div className=" mt-5">
         <p>Em caso de dúvida, entre em contato conosco.</p>
         <Link

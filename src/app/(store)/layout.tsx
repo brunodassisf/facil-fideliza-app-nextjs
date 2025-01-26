@@ -1,5 +1,7 @@
 import { getStore } from "@/core/actions/store";
 import { WrapperStore, Sidebar } from "@/presentation/components";
+import StoreLogo from "@/presentation/components/StoreLogo";
+import { Typography } from "@mui/material";
 import type { Metadata, Viewport } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,14 +41,25 @@ export default async function RootLayout({
   return (
     <section className="h-screen">
       <WrapperStore data={store}>
-        <div className="flex justify-between items-start pt-7 pb-3">
-          <div className="flex flex-col">
-            <h6>
+        <div className="flex justify-between items-start pt-7 pb-10">
+          <div>
+            <Typography variant="h6">
               Bem-vindo,
-              <span className="block text-2xl leading-3">
+              <span className="block text-2xl leading-5">
                 {store?.name || ""}
               </span>
-            </h6>
+            </Typography>
+          </div>
+          <div className="pt-4">
+            <Sidebar type="store" />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center mb-5">
+          <StoreLogo />
+          <Typography
+            variant="subtitle1"
+            className="!font-bold pt-3 rounded break-normal"
+          >
             <div className="mt-5">
               <div className="flex items-center text-sm">
                 <p>Clientes cadastrados:</p>
@@ -59,11 +72,9 @@ export default async function RootLayout({
                 </strong>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col items-end justify-around h-full">
-            <Sidebar type="store" />
-          </div>
+          </Typography>
         </div>
+
         <div className="bg-white h-full rounded-t-lg pt-4 px-4 overflow-y-scroll text-stone-900 pb-5">
           {children}
         </div>

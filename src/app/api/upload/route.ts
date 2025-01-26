@@ -1,45 +1,60 @@
 import { uploadFileToS3 } from "@/core/lib/awsS3";
 import prisma from "@/core/lib/prisma";
 import { v4 as uuidv4 } from "uuid";
+import type { NextApiRequest, NextApiResponse } from "next";
+import formidable from "formidable";
+import fs from "fs";
 
-export async function POST(request: Request) {
-  try {
-    const formData = await request.formData();
-    const id = formData.get("id");
-    const file = formData.get("file") as File;
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
-    if (!id || !file) {
-      return new Response("Missing id or file", {
-        status: 400,
-      });
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  const form = formidable();
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(500).send("Error nos arquivos enviados");
     }
 
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const id = fields.id;
+    const file = files.file;
 
+    if (!id || !file) {
+      return res.status(400).send("Error nos arquivos enviados");
+    }
+
+    const filePath = file[0].filepath;
+    const buffer = fs.readFileSync(filePath);
     const uuid = uuidv4();
     const timestamp = Date.now();
+
     const generateId = `${uuid}-${timestamp}`;
-    await uploadFileToS3(buffer, generateId, file?.type).then(async (key) => {
+
+    try {
+      const key = await uploadFileToS3(
+        buffer,
+        generateId,
+        file[0]?.mimetype as string
+      );
+
       await prisma.store.update({
         where: {
-          userId: id as string,
+          userId: id[0] as string,
         },
         data: {
           img: key,
         },
       });
-    });
 
-    return new Response("Logo salva com sucesso", {
-      status: 200,
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-      return new Response(error.message, {
-        status: 500,
-      });
+      return res.status(200).send("Logo salva com sucesso");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+        return res.status(500).send("Error ao salvar logo");
+      }
     }
-  }
+  });
 }

@@ -36,10 +36,11 @@ const Register: React.FC = () => {
   const route = useRouter();
   const { tag } = useTag();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [btnBlock, setBtnBlock] = useState<boolean>(false);
 
   const handleCreateAccount = async (values: IInitialValues) => {
     setIsLoading(true);
-
+    setBtnBlock(true);
     const { email, name, password, phone } = values;
     await registerClient({
       email,
@@ -50,10 +51,14 @@ const Register: React.FC = () => {
     })
       .then((res) => {
         toast.success(res?.message);
+        toast.success(
+          "Você será redirecionando para acessar suas felizações, aguarde"
+        );
         route.push(`/${tag?.tag}/meu-cartao`);
       })
       .catch((err) => {
         toast.error(err?.message);
+        setBtnBlock(false);
       })
       .finally(() => setIsLoading(false));
   };
@@ -169,7 +174,12 @@ const Register: React.FC = () => {
             ) : null}
           </FormGroup>
           <div className="w-full">
-            <Button fullWidth variant="contained" type="submit">
+            <Button
+              fullWidth
+              variant="contained"
+              type="submit"
+              disabled={btnBlock}
+            >
               Cadastrar
             </Button>
             <Divider className="my-2 text-stone-700">ou</Divider>
@@ -179,6 +189,7 @@ const Register: React.FC = () => {
               href={`/${tag?.tag}`}
               variant="outlined"
               fullWidth
+              disabled={btnBlock}
             >
               Fazer login
             </Button>
