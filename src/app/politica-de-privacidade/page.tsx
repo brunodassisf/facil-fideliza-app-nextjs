@@ -119,9 +119,13 @@ export default function Page() {
           </li>
         </ul>
 
-        <Typography variant="body1" className="py-3">
-          Para exercer seus direitos, entre em contato conosco pelo e-mail{" "}
-          <a href="mailto:seu-email@dominio.com">seu-email@dominio.com</a>.
+        <Typography variant="body1" className="pt-3">
+          Alterarção de dados cadastrados deverá ser notificado no e-mail citado
+          no final do documento para que seja realizado as devidas alterações.
+        </Typography>
+        <Typography variant="body1" className="pb-3">
+          Para exercer seus direitos, entre em contato conosco pelo e-mail
+          citado no final do documento.
         </Typography>
 
         <Typography variant="h5" className="pt-5" fontWeight={600}>
@@ -130,7 +134,23 @@ export default function Page() {
 
         <Typography variant="body1" className="py-3">
           Reservamo-nos o direito de atualizar esta política periodicamente. A
-          data da última atualização será indicada no início desta política.
+          data da última atualização será indicada no final do documento.
+        </Typography>
+
+        <Typography variant="h5" className="pt-5" fontWeight={600}>
+          8. Responsabilidades
+        </Typography>
+
+        <Typography variant="body1" className="pt-3">
+          A plataforma digital <strong>Fácil Fidelizar</strong> não se
+          responsabiliza pela forma como a loja utiliza a plataforma e interage
+          com seus participantes. A responsabilidade pelo uso adequado e pela
+          interação com os participantes é exclusivamente da loja.
+        </Typography>
+        <Typography variant="body1" className="pb-3">
+          Caso a loja deixe de fazer uso da plataforma e queira remover sua
+          conta, isso irá acarretar na remoção também dos dados da loja assim
+          como todos os clientes nela vínculados.
         </Typography>
 
         <Typography variant="h5" className="pt-5" fontWeight={600}>
@@ -143,17 +163,17 @@ export default function Page() {
         </Typography>
 
         <ul className="pl-5">
-          <li>
-            <strong>Nome da Empresa</strong>
+          <li className="flex gap-2">
+            <strong>Responsável:</strong>
+            <span>Bruno de Assis Ferreira</span>
           </li>
-          <li>
-            <strong>Endereço</strong>
+          <li className="flex gap-2">
+            <strong>Telefone:</strong>
+            <span>(21) 98294-7600</span>
           </li>
-          <li>
-            <strong>Telefone</strong>
-          </li>
-          <li>
-            <strong>E-mail</strong>
+          <li className="flex gap-2">
+            <strong>E-mail:</strong>
+            <span>facilfidelizar@gmail.com</span>
           </li>
         </ul>
 

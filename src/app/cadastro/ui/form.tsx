@@ -86,7 +86,7 @@ const Register: React.FC = () => {
           src="/logo.svg"
           alt="logo"
         />
-        <h5 className="text-3xl font-semibold">Fácil Fideliza</h5>
+        <h5 className="text-3xl font-semibold">Fácil Fidelizar</h5>
         <form
           onSubmit={handleSubmit}
           className="bg-white flex flex-col w-full justify-center items-center gap-y-5 mt-10 pt-5 px-4 pb-4 rounded-lg drop-shadow-md"

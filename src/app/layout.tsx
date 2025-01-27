@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/presentation/components";
 import PolityCookies from "./ui/PolityCookies";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const NunitoFont = Nunito({
   variable: "--font-Nunito-sans",
@@ -13,7 +14,7 @@ const NunitoFont = Nunito({
 export const metadata: Metadata = {
   title: "Fácil Fidelizar",
   description:
-    "Plataforma inovadora para lojistas fidelizarem clientes com facilidade. Ofereça vantagens exclusivas, acompanhe o engajamento e fortaleça o relacionamento com participantes. Simplifique a gestão de fidelidade e aumente a retenção com ferramentas intuitivas e eficazes.",
+    "Plataforma inovadora para lojistas fidelizarem participantes com facilidade. Ofereça vantagens exclusivas, acompanhe o engajamento e fortaleça o relacionamento com participantes. Simplifique a gestão de fidelidade e aumente a retenção com ferramentas intuitivas e eficazes.",
   openGraph: {
     images: [`${process.env.NEXT_PUBLIC_URL_BASE_AWS}facilfidelizar.png`],
   },
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className={`${NunitoFont.variable} bg-tag`}>
         <Provider>{children}</Provider>
         <PolityCookies />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE!} />
       </body>
     </html>
   );
