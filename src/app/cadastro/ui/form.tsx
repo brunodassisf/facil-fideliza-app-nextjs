@@ -66,7 +66,7 @@ const Register: React.FC = () => {
 
   const renderPolitcsLabel = () => {
     return (
-      <div>
+      <div className="text-stone-600">
         Concordo com a
         <Link className="ml-1 underline" href="/politica-de-privacidade">
           Política de Privacidade
