@@ -11,6 +11,7 @@ import {
 import { useFormik } from "formik";
 import VMasker from "vanilla-masker";
 import { Button, Input, ProgressBar } from "@/presentation/components";
+import { sendGAEvent } from "@next/third-parties/google";
 
 import { useState } from "react";
 import { signUpSchema as validationSchema } from "@/core/validation";
@@ -46,6 +47,7 @@ const Register: React.FC = () => {
       phone: values.phone,
     })
       .then((res) => {
+        sendGAEvent("event", "buttonClicked", { value: "Loja se cadastrou" });
         toast.success(res?.message);
         toast.success("Você será redirecionando para sua loja, aguarde");
         route.push("/loja");
