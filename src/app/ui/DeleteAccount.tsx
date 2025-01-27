@@ -24,7 +24,7 @@ const DeleteAccount: React.FC<DeleteAccountProps> = ({ id, text }) => {
 
   const handleDeleteAccount = async () => {
     setIsLoading(true);
-
+    handleOpenModal();
     await deleteAccount(id)
       .then((res) => {
         toast.success(res?.message);
