@@ -125,6 +125,8 @@ export const deleteAccount = async (id: string) => {
         await conn.user.deleteMany({ where: { StoreId: findUser.Store?.id } });
       }
 
+      await conn.user.delete({ where: { id: findUser?.id as string } });
+
       await logoutSession();
       return { message: "Conta deletada com sucesso" };
     });
