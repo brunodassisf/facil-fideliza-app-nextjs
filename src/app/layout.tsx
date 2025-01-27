@@ -48,7 +48,7 @@ export default function RootLayout({
       <body className={`${NunitoFont.variable} bg-tag`}>
         <Provider>{children}</Provider>
         <PolityCookies />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE!} />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_ADSENSE_ID!} />
       </body>
     </html>
   );
