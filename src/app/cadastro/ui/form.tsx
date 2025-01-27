@@ -47,7 +47,9 @@ const Register: React.FC = () => {
       phone: values.phone,
     })
       .then((res) => {
-        sendGAEvent("event", "buttonClicked", { value: "Loja se cadastrou" });
+        sendGAEvent("event", "buttonClicked", {
+          value: "Nova loja cadastrada",
+        });
         toast.success(res?.message);
         toast.success("Você será redirecionando para sua loja, aguarde");
         route.push("/loja");
