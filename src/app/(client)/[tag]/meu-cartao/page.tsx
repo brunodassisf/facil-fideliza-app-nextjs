@@ -6,5 +6,9 @@ export default async function Page() {
   const session = await getSession();
   const card = await getLoyaltyCard(session.id as string);
 
-  return <Dashboard data={card} />;
+  if (!card?.ok) {
+    return null;
+  }
+
+  return <Dashboard data={card.data} />;
 }

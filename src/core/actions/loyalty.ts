@@ -4,8 +4,29 @@ import { ProductLoaylty } from "@/app/(store)/ui/Loyalty";
 import prisma from "../lib/prisma";
 import { getDateTimeInTimezone } from "../util";
 import { getSession } from "./session";
+import { Loyalty, LoyaltyCard, LoyaltyProducts, Product } from "@prisma/client";
 
-export const getLoyaltyCard = async (id: string) => {
+type IResponse<T = undefined> = {
+  ok: boolean;
+  message?: string;
+  data?: T;
+};
+
+export type ListProduct = {
+  product: Product;
+} & LoyaltyProducts;
+
+type LoyaltysProducts = {
+  LoyaltyProducts: ListProduct[];
+} & Loyalty;
+
+export type UserCard = {
+  loyaltys: LoyaltysProducts[];
+} & LoyaltyCard;
+
+export const getLoyaltyCard = async (
+  id: string
+): Promise<IResponse<UserCard> | undefined> => {
   try {
     const card = await prisma.loyaltyCard.findFirst({
       where: {
@@ -27,16 +48,17 @@ export const getLoyaltyCard = async (id: string) => {
       },
     });
 
-    return card;
+    return { ok: true, data: card || undefined };
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao buscar cartão de fidelização:", error.message);
-      throw new Error(error.message);
+      return { ok: false, message: error.message };
     }
   }
 };
 
-export const historyLoyaltyCards = async () => {
+export const historyLoyaltyCards = async (): Promise<
+  IResponse<UserCard[]> | undefined
+> => {
   try {
     const session = await getSession();
     const card = await prisma.loyaltyCard.findMany({
@@ -59,11 +81,10 @@ export const historyLoyaltyCards = async () => {
       },
     });
 
-    return card;
+    return { ok: true, data: card };
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao buscar cartões de fidelização:", error.message);
-      throw new Error(error.message);
+      return { ok: false, message: error.message };
     }
   }
 };
@@ -76,7 +97,7 @@ export const updateLoyaltyCard = async ({
   id: string;
   clientId: string;
   reward: string;
-}) => {
+}): Promise<IResponse | undefined> => {
   try {
     const result = await prisma.$transaction(async (conn) => {
       const store = await conn.store.findFirst({
@@ -86,7 +107,7 @@ export const updateLoyaltyCard = async ({
       });
 
       if (!store) {
-        throw new Error("Loja não encontrada.");
+        return { ok: false, message: "Loja não encontrada" };
       }
 
       const card = await conn.loyaltyCard.findFirst({
@@ -97,7 +118,10 @@ export const updateLoyaltyCard = async ({
       });
 
       if (!card) {
-        throw new Error("Cartão de fidelização ativo não encontrado.");
+        return {
+          ok: false,
+          message: "Cartão de fidelização ativo não encontrado",
+        };
       }
 
       const createdAt = await getDateTimeInTimezone();
@@ -117,14 +141,19 @@ export const updateLoyaltyCard = async ({
         data: { clientId, createdAt },
       });
 
-      return { message: "Recompensa entregue ao cliente com sucesso" };
+      return {
+        ok: true,
+        message: "Recompensa entregue ao cliente com sucesso",
+      };
     });
 
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao atualizar a fidelização:", error.message);
-      throw new Error(error.message);
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };
@@ -135,7 +164,9 @@ export type NewLoyalty = {
   products: ProductLoaylty[];
 };
 
-export const createLoyalty = async (newLoyalty: NewLoyalty) => {
+export const createLoyalty = async (
+  newLoyalty: NewLoyalty
+): Promise<IResponse | undefined> => {
   try {
     const result = await prisma.$transaction(async (conn) => {
       const loyaltyCard = await conn.loyaltyCard.findFirst({
@@ -152,7 +183,10 @@ export const createLoyalty = async (newLoyalty: NewLoyalty) => {
       });
 
       if (!store) {
-        throw new Error("Loja nao encontrada.");
+        return {
+          ok: false,
+          message: "Loja nao encontrada",
+        };
       }
 
       const createdAt = await getDateTimeInTimezone();
@@ -189,14 +223,19 @@ export const createLoyalty = async (newLoyalty: NewLoyalty) => {
         },
       });
 
-      return { message: "Fidelização feita com sucesso" };
+      return {
+        ok: true,
+        message: "Fidelização feita com sucesso",
+      };
     });
 
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao cadastrar a fidelização:", error.message);
-      throw new Error(error.message);
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };

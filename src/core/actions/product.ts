@@ -3,6 +3,12 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
 
+type IResponse<T = undefined> = {
+  ok: boolean;
+  message?: string;
+  data?: T;
+};
+
 export type Product = {
   storeId: string | null;
   name: string;
@@ -18,7 +24,7 @@ export const createProduct = async ({
   name,
   description,
   price,
-}: Product) => {
+}: Product): Promise<IResponse | undefined> => {
   try {
     const result = await prisma.$transaction(async (conn) => {
       const hasSameProduct = await conn.product.findFirst({
@@ -31,7 +37,10 @@ export const createProduct = async ({
       });
 
       if (hasSameProduct) {
-        throw new Error("Você já tem um produto cadastrado com esse nome");
+        return {
+          ok: false,
+          message: "Você já tem um produto cadastrado com esse nome",
+        };
       }
       const formatPrice = parseInt(
         price.toString().replace(/\D/g, "") || "",
@@ -43,19 +52,26 @@ export const createProduct = async ({
       });
 
       revalidatePath("/loja");
-      return { message: "Produto cadastrado com sucesso" };
+      return {
+        ok: true,
+        message: "Produto cadastrado com sucesso",
+      };
     });
 
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao criar produto:", error.message);
-      throw new Error(error.message);
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };
 
-export const updateProduct = async (product: UpdateProductDto) => {
+export const updateProduct = async (
+  product: UpdateProductDto
+): Promise<IResponse | undefined> => {
   try {
     const { id, name, description, price } = product;
 
@@ -68,17 +84,22 @@ export const updateProduct = async (product: UpdateProductDto) => {
 
     revalidatePath("/loja/produtos");
     return {
+      ok: true,
       message: "Produto editado com sucesso",
     };
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao atualizar produto:", error.message);
-      throw new Error("Ocorreu um erro ao atualizar o produto.");
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };
 
-export const deleteProduct = async (id: string) => {
+export const deleteProduct = async (
+  id: string
+): Promise<IResponse | undefined> => {
   try {
     await prisma.product.delete({
       where: { id },
@@ -86,12 +107,15 @@ export const deleteProduct = async (id: string) => {
 
     revalidatePath("/loja");
     return {
+      ok: true,
       message: "Produto removido com sucesso",
     };
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao remover produto:", error.message);
-      throw new Error("Ocorreu um erro ao remover o produto.");
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };
@@ -99,21 +123,13 @@ export const deleteProduct = async (id: string) => {
 export const getProducts = async (
   id: string
 ): Promise<ListProductDto[] | null> => {
-  try {
-    const products = await prisma.product.findMany({
-      where: {
-        Store: {
-          userId: id,
-        },
+  const products = await prisma.product.findMany({
+    where: {
+      Store: {
+        userId: id,
       },
-    });
+    },
+  });
 
-    return products;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Erro ao obter produtos:", error.message);
-      throw new Error("Ocorreu um erro ao obter os produtos.");
-    }
-    throw error;
-  }
+  return products;
 };

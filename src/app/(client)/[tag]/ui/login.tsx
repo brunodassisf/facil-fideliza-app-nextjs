@@ -31,12 +31,14 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setBtnBlock(true);
     await credentials(values)
-      .then(() => {
-        router.push(`/${tag?.tag}/meu-cartao`);
-      })
-      .catch((res) => {
-        toast.error(res.message);
-        setBtnBlock(false);
+      .then((res) => {
+        if (res?.ok) {
+          toast.success(res.message);
+          router.push(`/${tag?.tag}/meu-cartao`);
+        } else {
+          toast.error(res?.message);
+          setBtnBlock(false);
+        }
       })
       .finally(() => setIsLoading(false));
   };

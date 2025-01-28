@@ -3,6 +3,7 @@ import { historyLoyaltyCards } from "@/core/actions/loyalty";
 
 export default async function Page() {
   const history = await historyLoyaltyCards();
+  if (!history?.ok) return null;
 
-  return <History data={history} />;
+  return <History data={history.data} />;
 }

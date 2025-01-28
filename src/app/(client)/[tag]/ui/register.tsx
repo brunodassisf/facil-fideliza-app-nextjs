@@ -50,15 +50,16 @@ const Register: React.FC = () => {
       tag: tag?.tag as string,
     })
       .then((res) => {
-        toast.success(res?.message);
-        toast.success(
-          "Você será redirecionando para acessar suas felizações, aguarde"
-        );
-        route.push(`/${tag?.tag}/meu-cartao`);
-      })
-      .catch((err) => {
-        toast.error(err?.message);
-        setBtnBlock(false);
+        if (res?.ok) {
+          toast.success(res?.message);
+          toast.success(
+            "Você será redirecionando para acessar suas felizações, aguarde"
+          );
+          route.push(`/${tag?.tag}/meu-cartao`);
+        } else {
+          toast.error(res?.message);
+          setBtnBlock(false);
+        }
       })
       .finally(() => setIsLoading(false));
   };

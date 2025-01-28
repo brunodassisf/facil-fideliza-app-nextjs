@@ -1,7 +1,8 @@
 "use client";
 
+import { UserCard } from "@/core/actions/loyalty";
 import { useTag } from "@/core/context/WrapperTag";
-import { HistoryData, HistoryLoyalty } from "@/core/type";
+import { HistoryLoyalty } from "@/core/type";
 import { formatDateTime } from "@/core/util";
 import { Button } from "@/presentation/components";
 import { Dialog, Typography } from "@mui/material";
@@ -10,7 +11,7 @@ import { useState } from "react";
 import { FaX } from "react-icons/fa6";
 
 type HistoryProps = {
-  data: HistoryData[] | undefined;
+  data: UserCard[] | undefined;
 };
 
 const History: React.FC<HistoryProps> = ({ data }) => {

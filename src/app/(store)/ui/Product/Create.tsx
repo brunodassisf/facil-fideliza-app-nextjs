@@ -30,11 +30,12 @@ const Create: React.FC = () => {
     setIsLoading(true);
     await createProduct({ ...values, storeId: store?.id as string })
       .then((res) => {
-        toast.success(res?.message);
-        formik.resetForm({ values: { ...initialValues } });
-      })
-      .catch((error) => {
-        toast.error(error?.message);
+        if (res?.ok) {
+          toast.success(res?.message);
+          formik.resetForm({ values: { ...initialValues } });
+        } else {
+          toast.error(res?.message);
+        }
       })
       .finally(() => setIsLoading(false));
   };

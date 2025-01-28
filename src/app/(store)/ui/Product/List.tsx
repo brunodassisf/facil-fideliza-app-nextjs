@@ -58,11 +58,14 @@ const List: React.FC<ListProps> = ({ data }) => {
     setIsLoading(true);
     await updateProduct({ ...values, storeId: store?.id as string })
       .then((res) => {
-        toast.success(res?.message);
-        setSelectProduct(null);
-        formikHelpers.resetForm({ values: { ...initialValues } });
+        if (res?.ok) {
+          toast.success(res?.message);
+          setSelectProduct(null);
+          formikHelpers.resetForm({ values: { ...initialValues } });
+        } else {
+          toast.error(res?.message);
+        }
       })
-      .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };
 
@@ -91,10 +94,13 @@ const List: React.FC<ListProps> = ({ data }) => {
     setIsLoading(true);
     await deleteProduct(values.id as string)
       .then((res) => {
-        toast.success(res?.message);
-        setSelectProduct(null);
+        if (res?.ok) {
+          toast.success(res?.message);
+          setSelectProduct(null);
+        } else {
+          toast.error(res?.message);
+        }
       })
-      .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };
 

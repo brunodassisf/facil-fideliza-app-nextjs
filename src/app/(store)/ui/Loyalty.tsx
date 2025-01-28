@@ -83,12 +83,15 @@ const Loyalty: React.FC = () => {
       products: listProductsLoaylty,
     })
       .then((res) => {
-        handleChangeClient();
-        setConfirm(false);
-        setSelectPhone("");
-        toast.success(res?.message);
+        if (res?.ok) {
+          handleChangeClient();
+          setConfirm(false);
+          setSelectPhone("");
+          toast.success(res?.message);
+        } else {
+          toast.error(res?.message);
+        }
       })
-      .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };
 
@@ -110,12 +113,15 @@ const Loyalty: React.FC = () => {
       reward,
     })
       .then((res) => {
-        handleChangeClient();
-        setConfirm(false);
-        setSelectPhone("");
-        toast.success(res?.message);
+        if (res?.ok) {
+          handleChangeClient();
+          setConfirm(false);
+          setSelectPhone("");
+          toast.success(res?.message);
+        } else {
+          toast.error(res?.message);
+        }
       })
-      .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };
 

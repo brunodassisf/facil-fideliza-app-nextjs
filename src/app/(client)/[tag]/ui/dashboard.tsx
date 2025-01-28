@@ -13,20 +13,8 @@ import { Button, CountdownTimer } from "@/presentation/components";
 import { useEffect, useState } from "react";
 import { useTag } from "@/core/context/WrapperTag";
 import ButtonHelper from "./ButtonHelper";
-import { Loyalty, LoyaltyCard, LoyaltyProducts, Product } from "@prisma/client";
 import { reloadPage } from "@/core/actions/user";
-
-export type ListProduct = {
-  product: Product;
-} & LoyaltyProducts;
-
-type LoyaltysProducts = {
-  LoyaltyProducts: ListProduct[];
-} & Loyalty;
-
-export type UserCard = {
-  loyaltys: LoyaltysProducts[];
-} & LoyaltyCard;
+import { UserCard } from "@/core/actions/loyalty";
 
 type DashboardProps = {
   data: UserCard | undefined | null;

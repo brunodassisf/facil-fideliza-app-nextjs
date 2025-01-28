@@ -9,11 +9,16 @@ import {
 } from "../util";
 import { getSession } from "./session";
 
+type IResponse = {
+  ok: boolean;
+  message?: string;
+};
+
 export const credentials = async (data: {
   phone: string;
   password: string;
   role?: string;
-}) => {
+}): Promise<IResponse | undefined> => {
   try {
     const session = await getSession();
     const cleanPhone = data.phone?.replace(/\D/g, "") || "";
@@ -37,13 +42,13 @@ export const credentials = async (data: {
     });
 
     if (!user) {
-      throw new Error("Usuário ou senha incorretos");
+      return { ok: false, message: "Usuário ou senha incorretos" };
     }
 
     const isValidPassword = await compare(data.password, user.hash);
 
     if (!user || !isValidPassword) {
-      throw new Error("Usuário ou senha incorretos");
+      return { ok: false, message: "Usuário ou senha incorretos" };
     }
 
     session.id = user.id;
@@ -58,9 +63,10 @@ export const credentials = async (data: {
     }
 
     await session.save();
+    return { ok: true };
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return { ok: false, message: error.message };
     }
   }
 };
@@ -75,7 +81,7 @@ export const registerStore = async ({
   name: string;
   email: string;
   password: string;
-}) => {
+}): Promise<IResponse | undefined> => {
   try {
     const session = await getSession();
 
@@ -88,7 +94,7 @@ export const registerStore = async ({
       });
 
       if (existPhoneOrEmail.length > 0) {
-        throw new Error("Usuário já cadastrado");
+        return { ok: false, message: "Usuário já cadastrado" };
       }
 
       const store = await conn.store.findFirst({
@@ -100,7 +106,7 @@ export const registerStore = async ({
       });
 
       if (store) {
-        throw new Error("Loja já cadastrada");
+        return { ok: false, message: "Loja já cadastrada" };
       }
 
       const generateHash = await encrypt(password);
@@ -110,7 +116,7 @@ export const registerStore = async ({
       });
 
       if (!freePlan) {
-        throw new Error("Plano Bronze não encontrado");
+        return { ok: false, message: "Plano Bronze não encontrado" };
       }
 
       const createdAt = await getDateTimeInTimezone();
@@ -147,13 +153,13 @@ export const registerStore = async ({
 
       await session.save();
 
-      return { message: "Loja cadastrada com sucesso" };
+      return { ok: true, message: "Loja cadastrada com sucesso" };
     });
 
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return { ok: false, message: error.message };
     }
   }
 };
@@ -170,7 +176,7 @@ export const registerClient = async ({
   name: string;
   email: string;
   password: string;
-}) => {
+}): Promise<IResponse | undefined> => {
   try {
     const session = await getSession();
 
@@ -182,7 +188,7 @@ export const registerClient = async ({
       });
 
       if (existPhoneOrEmail.length > 0) {
-        throw new Error("E-mail/telefone já existem");
+        return { ok: true, message: "E-mail/telefone já existem" };
       }
 
       const store = await conn.store.findFirst({
@@ -205,9 +211,11 @@ export const registerClient = async ({
       });
 
       if (!store) {
-        throw new Error(
-          "Essa loja não esta cadastrada, não e possível cadastrar um cliente "
-        );
+        return {
+          ok: true,
+          message:
+            "Essa loja não esta cadastrada, não e possível cadastrar um cliente",
+        };
       }
 
       const generateHash = await encrypt(password);
@@ -260,13 +268,16 @@ export const registerClient = async ({
 
       await session.save();
 
-      return { message: "Usuário cadastrado com sucesso" };
+      return { ok: true, message: "Usuário cadastrado com sucesso" };
     });
 
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 };

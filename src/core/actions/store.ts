@@ -12,7 +12,7 @@ type StoreUpdate = {
   textColor: string;
 };
 
-export async function getStore() {
+export const getStore = async () => {
   const session = await getSession();
 
   const store = await prisma.store.findFirst({
@@ -29,12 +29,8 @@ export async function getStore() {
     },
   });
 
-  if (!store) {
-    throw new Error("Loja não encontrada");
-  }
-
   return store;
-}
+};
 
 export async function getStoreByTag(tag: string) {
   const store = await prisma.store.findFirst({
@@ -53,7 +49,17 @@ export async function getStoreByTag(tag: string) {
     },
   });
 
-  return store;
+  if (!store) {
+    return {
+      ok: false,
+      message: "Loja não encontrada",
+    };
+  }
+
+  return {
+    ok: true,
+    data: store,
+  };
 }
 
 export async function updateStore(id: string, obj: StoreUpdate) {
@@ -70,12 +76,15 @@ export async function updateStore(id: string, obj: StoreUpdate) {
 
     revalidatePath("/loja");
     return {
+      ok: true,
       message: "Loja atualizada com sucesso",
     };
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao atulizar loja:", error.message);
-      throw new Error("Ocorreu um erro ao atulizar loja.");
+      return {
+        ok: false,
+        message: error.message,
+      };
     }
   }
 }

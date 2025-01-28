@@ -29,12 +29,13 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setBtnBlock(true);
     await credentials(values)
-      .then(() => {
-        router.push("/loja");
-      })
-      .catch((res) => {
-        toast.error(res.message);
-        setBtnBlock(false);
+      .then((res) => {
+        if (res?.ok) {
+          router.push("/loja");
+        } else {
+          toast.error(res?.message);
+          setBtnBlock(false);
+        }
       })
       .finally(() => setIsLoading(false));
   };

@@ -47,16 +47,17 @@ const Register: React.FC = () => {
       phone: values.phone,
     })
       .then((res) => {
-        sendGAEvent("event", "buttonClicked", {
-          value: "Nova loja cadastrada",
-        });
-        toast.success(res?.message);
-        toast.success("Você será redirecionando para sua loja, aguarde");
-        route.push("/loja");
-      })
-      .catch((err) => {
-        toast.error(err?.message);
-        setBtnBlock(false);
+        if (res?.ok) {
+          sendGAEvent("event", "buttonClicked", {
+            value: "Nova loja cadastrada",
+          });
+          toast.success(res?.message);
+          toast.success("Você será redirecionando para sua loja, aguarde");
+          route.push("/loja");
+        } else {
+          toast.error(res?.message);
+          setBtnBlock(false);
+        }
       })
       .finally(() => setIsLoading(false));
   };

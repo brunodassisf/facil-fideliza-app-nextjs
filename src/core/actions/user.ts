@@ -44,9 +44,10 @@ export const searchClient = async (storeId: string, phone: string) => {
       });
 
       if (!findClient) {
-        throw new Error(
-          "Usuário não encontrado, favor verificar o telefone se esta correto"
-        );
+        return {
+          message:
+            "Usuário não encontrado, favor verificar o telefone se esta correto",
+        };
       }
 
       const createdAt = await getDateTimeInTimezone();
@@ -58,15 +59,18 @@ export const searchClient = async (storeId: string, phone: string) => {
       });
 
       if (!findClient.Client || !store) {
-        throw new Error(
-          "Usuário não encontrado, favor verificar o telefone se esta correto"
-        );
+        return {
+          ok: false,
+          message:
+            "Usuário não encontrado, favor verificar o telefone se esta correto",
+        };
       }
 
       if (store?.tag !== findClient?.Client.tag) {
-        throw new Error(
-          "Usuário não encontrado ou não está cadastrado na sua loja"
-        );
+        return {
+          ok: false,
+          message: "Usuário não encontrado ou não está cadastrado na sua loja",
+        };
       }
 
       if (
@@ -74,23 +78,30 @@ export const searchClient = async (storeId: string, phone: string) => {
         store?.cooldown > 0 &&
         findClient.Client.LoyaltyCard[0].nextLoyalty >= createdAt
       ) {
-        throw new Error(
-          `Aguarde ${store.cooldown} hora(s) para poder fidelizar esse cliente novamente`
-        );
+        return {
+          ok: false,
+          message: `Aguarde ${store.cooldown} hora(s) para poder fidelizar esse cliente novamente`,
+        };
       }
 
       if (
         findClient.Client.LoyaltyCard[0].amount === store.amountLoyaltyByCard
       ) {
-        return { ...findClient, rewardReady: true };
+        return {
+          ok: true,
+          data: { ...findClient, rewardReady: true },
+        };
       }
 
-      return { ...findClient, rewardReady: false };
+      return {
+        ok: true,
+        data: { ...findClient, rewardReady: false },
+      };
     });
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return { ok: false, message: error.message };
     }
   }
 };

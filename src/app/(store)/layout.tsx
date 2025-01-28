@@ -6,12 +6,12 @@ import type { Metadata, Viewport } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const store = await getStore();
-  const img = store.img
+  const img = store?.img
     ? process.env.NEXT_PUBLIC_URL_BASE_AWS! + store.img
     : process.env.NEXT_PUBLIC_URL_BASE_AWS! + "facilfidelizar.png";
 
   return {
-    title: `${store.name} - Bem-vindo`,
+    title: `${store?.name} - Bem-vindo`,
 
     openGraph: {
       url: `${process.env.NEXT_PUBLIC_URL_APP}/loja`,
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export async function generateViewport(): Promise<Viewport> {
   const store = await getStore();
   return {
-    themeColor: store.bgColor || "#83cbff",
+    themeColor: store?.bgColor || "#83cbff",
   };
 }
 
