@@ -49,17 +49,7 @@ export async function getStoreByTag(tag: string) {
     },
   });
 
-  if (!store) {
-    return {
-      ok: false,
-      message: "Loja não encontrada",
-    };
-  }
-
-  return {
-    ok: true,
-    data: store,
-  };
+  return store;
 }
 
 export async function updateStore(id: string, obj: StoreUpdate) {

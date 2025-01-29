@@ -4,6 +4,7 @@ import "./globals.css";
 import { Provider } from "@/presentation/components";
 import PolityCookies from "./ui/PolityCookies";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import GoogleAdsenseScript from "./ui/GoogleAdsense";
 
 const NunitoFont = Nunito({
   variable: "--font-Nunito-sans",
@@ -43,12 +44,13 @@ export default function RootLayout({
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
+        <GoogleAdsenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_ID!} />
       </head>
 
       <body className={`${NunitoFont.variable} bg-tag`}>
         <Provider>{children}</Provider>
         <PolityCookies />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_ADSENSE_ID!} />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_ANALITYCS_ID!} />
       </body>
     </html>
   );
