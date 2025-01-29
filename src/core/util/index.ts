@@ -1,4 +1,4 @@
-import { ListProduct } from "@/app/(client)/[tag]/ui/dashboard";
+import { ListProduct } from "../actions/loyalty";
 
 export const isEmptyObject = (obj: object): boolean => {
   return Object.keys(obj).length === 0;
