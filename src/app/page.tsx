@@ -22,17 +22,16 @@ const arrCarrousel = [
     img: "03",
     title: "Menu",
     text: `No menu você acessará recursos muitos importantes para te
-          ajudar, como customização, cadastrar produtos, listar seus
+          ajudar, como personalizar seu site, cadastrar produtos, listar seus
           produtos onde você poderá excluir ou editar eles, assim como
           fidelizar com seus participantes.`,
   },
   {
     img: "04",
-    title: "Customização",
+    title: "Personalize como quiser",
     text: `Aqui você irá configurar como sua loja aparecerá para seus
           participantes. Desde a cor de fundo do seu app, quantidade
-          de fidelizações que cada cliente fará em seus cartões, tempo
-          de espera entre cada fidelização e cadastrar uma recompensa
+          de fidelizações que cada cliente fará em seus cartões e cadastrar uma recompensa
           para eles.`,
   },
   {
@@ -43,49 +42,54 @@ const arrCarrousel = [
   },
   {
     img: "06",
-    title: "Edite ou exclua produtos",
-    text: `Você poderá editar ou excluir seus produtos.`,
-  },
-  {
-    img: "07",
-    title: "Deixando sua marca",
-    text: `Adicionando sua logo você deixa a sua loja mais
-          personalizada e com a sua cara para seus participantes.`,
-  },
-  {
-    img: "08",
-    title: "Agora, compartilhe",
+    title: "Compartilhe com seus participantes",
     text: `Divulgue para seus participantes o seu link, eles poderão se
           cadastrar em sua loja e você poderá fidelizar com eles!`,
   },
   {
+    img: "07",
+    title: "Acessando seu site",
+    text: `Os participantes poderão se cadastrar e começarem a utilizar seu cartão de fidelidade.`,
+  },
+  {
+    img: "08",
+    title: "Meu cartão da loja!",
+    text: `Quando seus participantes acessarem o site, verão o seuc artão sendo preenchido a cada compra que você registrar.`,
+  },
+  {
     img: "09",
-    title: "Seus participantes",
-    text: `A pessoas poderá se cadastrar e se conectar direto com sua
-          loja e começaram a participar.`,
+    title: "Cria uma fidelização",
+    text: `Quando o participante compra no seu estabelecimento, você pedira seu telefone que foi cadastrado. Apos isso você preencherá e adicionará os produtos que ele comprou, após isso e so confirmar!`,
   },
   {
     img: "10",
-    title: "Login do cliente",
-    text: `Essa e a tela onde seu cliente poderá acompanhar os
-          progressos da sua fidelização.`,
+    title: "Conquistando fidelização",
+    text: `Seu cliente verá todas as fidelizações que você marca no cartão dele.`,
   },
   {
     img: "11",
-    title: "Fidelizando",
-    text: `Com sua loja customizada, seus produtos e participantes
-          cadastrados, você poderá gerar uma fidelização usando o
-          telefone da conta do seu cliente. Adcionando os produtos que
-          eles consumiu e confirmando, você irá fidelizar a compra
-          dele.`,
+    title: "Completando um cartão",
+    text: `Quando seu cliente comprar ate completar o cartão, sua próxima compra será o resgate que você quer entregar pra ele.`,
   },
   {
     img: "12",
-    title: "Pronto!",
-    text: `Agora seu participante verá as fidelizações em seu cartão.
-          Podendo acompanhar até que o cartão seja preenchido. Caso ele
-          fique completo você poderá recompensar ele e nisso irá gerar
-          um novo cartão para ele usar novamente.`,
+    title: "Recompense seus participantes",
+    text: "Agora você poderá recompensar o seu participante, construindo compromentimento em qualidade e atendimento.",
+  },
+  {
+    img: "13",
+    title: "Resgatado!",
+    text: "Parabéns, você conclui o cartão do seu participante!",
+  },
+  {
+    img: "14",
+    title: "Histórico do participante",
+    text: "Após concluir o cartão do seu participante, ele verá todos os cartão concluidos no histórico dele.",
+  },
+  {
+    img: "15",
+    title: "Continue fidelizando",
+    text: "Após concluir um cartão, seu participante receberá um cartão novo e pronto para ser preenchido novamente.",
   },
 ];
 

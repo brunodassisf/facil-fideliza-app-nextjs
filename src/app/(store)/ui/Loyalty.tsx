@@ -43,8 +43,13 @@ const Loyalty: React.FC = () => {
   const handleSearchClient = async () => {
     setIsLoading(true);
     await searchClient(store?.id as string, phone)
-      .then((res) => setClient(res as SearchInfo))
-      .catch((err) => toast.error(err.message))
+      .then((res) => {
+        if (res?.ok) {
+          setClient(res.data as SearchInfo);
+        } else {
+          toast.error(res?.message);
+        }
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -129,7 +134,7 @@ const Loyalty: React.FC = () => {
     <>
       {isLoading && <ProgressBar />}
       <div>
-        <Typography variant="h6">Fidelizar cliente</Typography>
+        <Typography variant="h6">Fidelizar participante</Typography>
         <div className="mt-3">
           {client ? (
             <>
@@ -155,8 +160,9 @@ const Loyalty: React.FC = () => {
                 <div className="mt-5 flex flex-col gap-y-3">
                   <div>
                     <Typography className="py-4 !leading-5" variant="body1">
-                      Essa é a recompensa para seu cliente, caso queira você
-                      pode alterar ela antes de confirmar a recompensa para ele.
+                      Essa é a recompensa para seu participante, caso queira
+                      você pode alterar ela antes de confirmar a recompensa para
+                      ele.
                     </Typography>
                     <Textarea
                       minRows={4}
@@ -272,7 +278,7 @@ const Loyalty: React.FC = () => {
                 <div className="flex flex-col gap-y-5">
                   <TextField
                     fullWidth
-                    label="Telefone do cliente"
+                    label="Telefone do participante"
                     value={phone}
                     onChange={(ev) =>
                       setSelectPhone(
@@ -299,7 +305,7 @@ const Loyalty: React.FC = () => {
                     aqui
                   </Link>
                   , você irá configurar como sua loja deve funcionar e será
-                  vista pelos seus clientes.
+                  vista pelos seus participantes.
                 </Typography>
               )}
             </>
@@ -313,13 +319,13 @@ const Loyalty: React.FC = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Confirme a fidelização para seu cliente
+          Confirme a fidelização para seu participante
         </DialogTitle>
         <DialogContent>
           {client && (
             <div id="alert-dialog-description">
               <Typography>
-                Nome do cliente:
+                Nome do participante:
                 <strong>{client?.Client?.name as string}</strong>
               </Typography>
               <Typography>

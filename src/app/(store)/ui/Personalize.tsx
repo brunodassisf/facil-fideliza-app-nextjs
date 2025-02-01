@@ -17,14 +17,13 @@ import { updateStore } from "@/core/actions/store";
 import { toast } from "react-toastify";
 import { useResourceStore } from "@/core/context/WrapperStore";
 
-const Customize: React.FC = () => {
+const Personalize: React.FC = () => {
   const { store, setData } = useResourceStore();
 
   const initialValues = {
     bgColor: store?.bgColor || "",
     textColor: store?.textColor || "",
     amountLoyaltyByCard: store?.amountLoyaltyByCard || "",
-    cooldown: store?.cooldown || "0",
     reward: store?.reward || "",
   };
 
@@ -39,15 +38,17 @@ const Customize: React.FC = () => {
       values.amountLoyaltyByCard as string,
       10
     );
-    const formatCooldown = parseInt(values.cooldown as string, 10);
 
     await updateStore(store?.id as string, {
       ...values,
       amountLoyaltyByCard: formatAmountLoyaltyByCard,
-      cooldown: formatCooldown,
     })
       .then((res) => {
-        toast.success(res?.message);
+        if (res?.ok) {
+          toast.success(res?.message);
+        } else {
+          toast.error(res?.message);
+        }
       })
       .finally(() => setIsLoading(false));
   };
@@ -64,7 +65,7 @@ const Customize: React.FC = () => {
       {isLoading && <ProgressBar />}
       <div className="p-3">
         <Typography variant="h6" className="">
-          Customização
+          Personalizar
         </Typography>
       </div>
       <Divider />
@@ -117,8 +118,8 @@ const Customize: React.FC = () => {
         </div>
         <div>
           <Typography variant="body2" className="pb-4">
-            Escolha a quantidade de fidelização que seu cliente pode fazer em
-            cada cartão.
+            Escolha a quantidade de fidelização que seu participante pode fazer
+            em cada cartão.
           </Typography>
           <TextField
             fullWidth
@@ -141,29 +142,9 @@ const Customize: React.FC = () => {
         </div>
         <div>
           <Typography variant="body2" className="pb-4">
-            Aqui você define quantas horas seu cliente vai ter que esperar até
-            pode fidelizar novamente, por exemplo: 8 horas, você irá esperar 8
-            horas para poder marcar o cartão dele novamente.
-          </Typography>
-          <TextField
-            fullWidth
-            label="Tempo de espera (em horas)"
-            value={values.cooldown}
-            name="cooldown"
-            onChange={(ev) =>
-              setFieldValue(
-                "cooldown",
-                VMasker.toPattern(ev.target.value, "99")
-              )
-            }
-            error={touched.cooldown && Boolean(errors.cooldown)}
-            helperText={touched.cooldown && errors.cooldown}
-          />
-        </div>
-        <div>
-          <Typography variant="body2" className="pb-4">
-            Digite a recompensa que seu cliente receberá ao completar um cartão.
-            Exemplo: Um brinde ________..., um produto com desconto de __%
+            Digite a recompensa que seu participante receberá ao completar um
+            cartão. Exemplo: Um brinde ________..., um produto com desconto de
+            __%
           </Typography>
           <Textarea
             minRows={4}
@@ -182,4 +163,4 @@ const Customize: React.FC = () => {
   );
 };
 
-export default Customize;
+export default Personalize;

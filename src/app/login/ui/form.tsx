@@ -7,11 +7,11 @@ import { useState } from "react";
 import VMasker from "vanilla-masker";
 import { signIpSchema as validationSchema } from "@/core/validation";
 import { Button, Input, ProgressBar } from "@/presentation/components";
-import Image from "next/image";
 import Link from "next/link";
 import { credentials } from "@/core/actions/credential";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import StoreLogo from "@/presentation/components/StoreLogo";
 
 const initialValues = {
   phone: "",
@@ -50,20 +50,14 @@ const Login: React.FC = () => {
     <>
       {isLoading && <ProgressBar />}
 
-      <div className="flex flex-col justify-center items-center pt-20 gap-y-4 pb-5 text-tag lg:max-w-2xl md:m-auto px-4">
-        <Image
-          width={150}
-          height={150}
-          priority={true}
-          src="/logo.svg"
-          alt="logo"
-        />
-        <h5 className="text-3xl font-semibold">Fácil Fidelizar</h5>
+      <div className="flex flex-col justify-center items-center pt-20 gap-y-1 pb-5 text-tag lg:max-w-2xl md:m-auto px-4">
+        <StoreLogo />
+        <h5 className="text-3xl font-semibold mt-4">Fácil Fidelizar</h5>
+        <h6 className="text-center text-xl">Login</h6>
         <form
           onSubmit={handleSubmit}
-          className="bg-white flex flex-col w-full justify-center items-center gap-y-5 pt-5 mt-10 px-4 pb-4 rounded-lg drop-shadow"
+          className="bg-white flex flex-col w-full justify-center items-center mt-5 gap-y-5 pt-5 px-4 pb-4 rounded-lg drop-shadow-md"
         >
-          <h6 className="text-center text-stone-700 text-2xl">Login</h6>
           <Input
             label="Telefone"
             value={values.phone}

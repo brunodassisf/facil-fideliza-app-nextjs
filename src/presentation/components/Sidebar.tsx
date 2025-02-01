@@ -31,8 +31,8 @@ const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
         link: "/loja",
       },
       {
-        name: "Costumização",
-        link: "/loja/customizar",
+        name: "Personalizar",
+        link: "/loja/personalizar",
       },
       {
         name: "Cadastrar produto",
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
         link: "/loja/produtos",
       },
       {
-        name: "Fidelizar cliente",
+        name: "Fidelizar participante",
         link: "/loja/fidelizar",
       },
       {
@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
       router.push(link);
       handleStateOpen();
     } else {
-      await logoutSession().finally(() => {
+      await logoutSession().then(() => {
         if (tag) {
           router.push(`/${tag}`);
           return;

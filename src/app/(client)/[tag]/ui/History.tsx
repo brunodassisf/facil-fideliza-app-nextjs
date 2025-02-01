@@ -35,25 +35,25 @@ const History: React.FC<HistoryProps> = ({ data }) => {
                   <div>
                     <Typography variant="subtitle2">
                       Iniciado em
-                      <span className="text-tag ml-1">
+                      <span className="text-stone-600 ml-1">
                         {formatDateTime(loyaltyCard?.createdAt.toString())}
                       </span>
                     </Typography>
                     <Typography variant="subtitle2">
                       Finalizado em
-                      <span className="text-tag ml-1">
+                      <span className="text-stone-600 ml-1">
                         {formatDateTime(loyaltyCard?.nextLoyalty?.toString())}
                       </span>
                     </Typography>
                     <Typography variant="caption">
                       Número de fidelizações
-                      <span className="text-tag ml-1">
+                      <span className="text-stone-600 ml-1">
                         {loyaltyCard?.amount}
                       </span>
                     </Typography>
                     <Typography variant="caption" className="block pt-4">
                       Recompensa resgatada:
-                      <span className="text-tag block">
+                      <span className="text-stone-600 block">
                         {loyaltyCard?.reward}
                       </span>
                     </Typography>

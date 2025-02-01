@@ -19,7 +19,6 @@ type WrapperStoreContext = {
   reward?: string | null;
   bgColor?: string | null;
   textColor?: string | null;
-  cooldown?: number | null;
   img?: string | null;
   ready?: boolean;
   PlanStore?: {

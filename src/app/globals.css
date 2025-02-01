@@ -65,6 +65,10 @@ strong {
   background-color: #ededed !important;
 }
 
+.border-tag {
+  border: 1px solid #004aad;
+}
+
 .text-tag {
   color: #004aad;
 }

@@ -15,11 +15,11 @@ import { sendGAEvent } from "@next/third-parties/google";
 
 import { useState } from "react";
 import { signUpSchema as validationSchema } from "@/core/validation";
-import Image from "next/image";
 import Link from "next/link";
 import { registerStore } from "@/core/actions/credential";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import StoreLogo from "@/presentation/components/StoreLogo";
 
 const initialValues = {
   phone: "",
@@ -83,21 +83,14 @@ const Register: React.FC = () => {
   return (
     <>
       {isLoading && <ProgressBar />}
-      <section className="flex flex-col justify-center items-center pt-20 gap-y-4 pb-5 text-blue-900 lg:max-w-2xl md:m-auto px-4">
-        <Image
-          width={150}
-          height={150}
-          priority={true}
-          src="/logo.svg"
-          alt="logo"
-        />
-        <h5 className="text-3xl font-semibold">Fácil Fidelizar</h5>
+      <section className="flex flex-col justify-center items-center pt-20 gap-y-1 pb-5 text-tag lg:max-w-2xl md:m-auto px-4">
+        <StoreLogo />
+        <h5 className="text-3xl font-semibold mt-4">Fácil Fidelizar</h5>
+        <h6 className="text-center text-xl">Cadastre-se</h6>
         <form
           onSubmit={handleSubmit}
-          className="bg-white flex flex-col w-full justify-center items-center gap-y-5 mt-10 pt-5 px-4 pb-4 rounded-lg drop-shadow-md"
+          className="bg-white flex flex-col w-full justify-center items-center mt-5 gap-y-5 pt-5 px-4 pb-4 rounded-lg drop-shadow-md"
         >
-          <h6 className="text-center text-stone-700 text-2xl">Cadastro</h6>
-
           <Input
             fullWidth
             label="Nome da Loja"

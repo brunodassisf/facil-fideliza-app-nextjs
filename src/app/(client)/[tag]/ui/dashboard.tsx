@@ -2,19 +2,19 @@
 
 import { Typography } from "@mui/material";
 import { FaHeart, FaRotate } from "react-icons/fa6";
+import VMasker from "vanilla-masker";
 import {
   formatDateTime,
   getTotalValueCard,
   maskerMoney,
 } from "../../../../core/util";
-import VMasker from "vanilla-masker";
 
-import { Button, CountdownTimer } from "@/presentation/components";
-import { useEffect, useState } from "react";
-import { useTag } from "@/core/context/WrapperTag";
-import ButtonHelper from "./ButtonHelper";
-import { reloadPage } from "@/core/actions/user";
 import { UserCard } from "@/core/actions/loyalty";
+import { reloadPage } from "@/core/actions/user";
+import { useTag } from "@/core/context/WrapperTag";
+import { Button } from "@/presentation/components";
+import { useEffect, useState } from "react";
+import ButtonHelper from "./ButtonHelper";
 
 type DashboardProps = {
   data: UserCard | undefined | null;
@@ -76,18 +76,14 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
       )}
       <div className="mt-5">
         {loayltyCard &&
-        tag?.amountLoyaltyByCard === loayltyCard?.loyaltys.length ? (
-          <Typography
-            variant="subtitle2"
-            className="bg-emerald-300 p-2 rounded text-center"
-          >
-            Resgate sua recompensa!
-          </Typography>
-        ) : (
-          <div className="my-7">
-            <CountdownTimer data={loayltyCard?.nextLoyalty?.toString() || ""} />
-          </div>
-        )}
+          tag?.amountLoyaltyByCard === loayltyCard?.loyaltys.length && (
+            <Typography
+              variant="subtitle2"
+              className="bg-emerald-300 p-2 rounded text-center"
+            >
+              Resgate sua recompensa!
+            </Typography>
+          )}
         <div
           className="grid grid-cols-5 gap-1 border-2 rounded border-dashed p-3"
           style={{ borderColor: tag?.bgColor as string }}

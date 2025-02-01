@@ -266,6 +266,12 @@ export const registerClient = async ({
       session.email = newUser.email;
       session.role = newUser.role;
 
+      if (newUser.Client !== null) {
+        const { Client } = newUser;
+        session.name = Client?.name;
+        session.storeName = store?.name;
+      }
+
       await session.save();
 
       return { ok: true, message: "Usuário cadastrado com sucesso" };

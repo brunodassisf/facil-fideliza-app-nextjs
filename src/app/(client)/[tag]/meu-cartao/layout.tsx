@@ -15,7 +15,7 @@ export default async function RootLayout({
 
   return (
     <div className="px-4">
-      <div className="flex justify-between items-start pt-7 pb-10">
+      <div className="flex justify-between items-start pt-16 pb-10">
         <div>
           <Typography variant="h6">
             Bem-vindo,

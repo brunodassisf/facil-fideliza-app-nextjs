@@ -80,10 +80,6 @@ export const customizeSchema = yup.object().shape({
     .string()
     .min(1, "Quantidade obrigatória")
     .required("Preço obrigatório"),
-  cooldown: yup
-    .string()
-    .min(1, "Tempo de espera obrigatória")
-    .required("Tempo de espera obrigatório"),
   reward: yup
     .string()
     .trim()

@@ -6,7 +6,6 @@ import { getSession } from "./session";
 
 type StoreUpdate = {
   amountLoyaltyByCard: number;
-  cooldown: number;
   reward: string;
   bgColor: string;
   textColor: string;
