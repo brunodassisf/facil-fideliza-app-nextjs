@@ -10,11 +10,11 @@ const Carrousel: React.FC<CarrouselProps> = ({ children }) => {
   const settings: Settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 900,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    //autoplay: true,
+    autoplay: true,
   };
   return (
     <div className="container m-auto">

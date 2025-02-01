@@ -1,9 +1,9 @@
 "use client";
 
 import { Button, Carrousel } from "@/presentation/components";
-import { FaCircleUser } from "react-icons/fa6";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { FaCircleUser, FaGifts, FaWhatsapp } from "react-icons/fa6";
 
 const arrCarrousel = [
   {
@@ -112,15 +112,31 @@ const Home: React.FC = () => {
             <p className="text-lg leading-5 mb-5">
               Aplicativo que conecta Lojista com seus participantes.
             </p>
-            <Button component={Link} href="/login">
-              <div className="flex gap-x-2">
-                <FaCircleUser size={22} />
-                Fazer Login
-              </div>
-            </Button>
-            <Button component={Link} href="#sobre">
-              Conheça o App
-            </Button>
+            <div className="max-w-64 flex flex-col gap-y-4">
+              <Button fullWidth component={Link} href="/login">
+                <div className="flex gap-x-2 py-1">
+                  <FaCircleUser size={22} />
+                  Fazer Login
+                </div>
+              </Button>
+              <Button fullWidth component={Link} href="#sobre">
+                <div className="flex gap-x-2 py-1">
+                  <FaGifts size={22} />
+                  Conheça o App
+                </div>
+              </Button>
+              <Button
+                fullWidth
+                component={Link}
+                formTarget="_blank"
+                href="https://wa.me/5521982947600?text=Olá, quero tirar dúividas sobre o aplicativo de fidelização!"
+              >
+                <div className="flex gap-x-2 py-1">
+                  <FaWhatsapp size={22} />
+                  Tire dúvidas
+                </div>
+              </Button>
+            </div>
           </div>
         </section>
         <section id="sobre" className="h-screen px-4 bg-white pt-5">
