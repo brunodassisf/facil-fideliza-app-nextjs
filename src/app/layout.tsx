@@ -44,6 +44,7 @@ export default function RootLayout({
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
+        <meta name="google-adsense-account" content="ca-pub-2603617431489136" />
         <GoogleAdsenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_ID!} />
       </head>
 
