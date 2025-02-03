@@ -95,7 +95,7 @@ export function formatPhoneString(telefone: string) {
   return telefone.replace(/[ ()-]/g, "");
 }
 
-export function formatDateTime(dateString: string | undefined) {
+export function formatDateTime(dateString: string | Date | undefined) {
   const date = new Date(dateString as string);
 
   const day = String(date.getUTCDate()).padStart(2, "0");

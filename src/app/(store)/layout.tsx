@@ -1,5 +1,5 @@
-import { getStore } from "@/core/actions/store";
-import { WrapperStore, Sidebar } from "@/presentation/components";
+import { getStore, getStoreNotifications } from "@/core/actions/store";
+import { WrapperStore, Sidebar, Notification } from "@/presentation/components";
 import StoreLogo from "@/presentation/components/StoreLogo";
 import { Typography } from "@mui/material";
 import type { Metadata, Viewport } from "next";
@@ -33,6 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const store = await getStore();
+  const notifications = await getStoreNotifications();
 
   if (!store) {
     return <div>Carregando...</div>;
@@ -50,7 +51,8 @@ export default async function RootLayout({
               </span>
             </Typography>
           </div>
-          <div className="pt-4">
+          <div className="pt-4 flex gap-x-14">
+            <Notification data={notifications} bgColor={store?.bgColor || ""} />
             <Sidebar type="store" />
           </div>
         </div>
@@ -61,8 +63,8 @@ export default async function RootLayout({
             className="!font-bold pt-3 rounded break-normal"
           >
             <div className="mt-5">
-              <div className="flex items-center text-sm">
-                <p>Clientes cadastrados:</p>
+              <div className="flex items-center text-sm mb-3">
+                <p>Participantes cadastrados:</p>
                 <strong className="mx-1">
                   {store?.PlanStore?.amountClientsUse}
                 </strong>
@@ -71,6 +73,16 @@ export default async function RootLayout({
                   {store?.PlanStore?.Plan.amountClients}
                 </strong>
               </div>
+              {store?.PlanStore?.amountClientsUse ===
+                store?.PlanStore?.Plan.amountClients && (
+                <Typography
+                  variant="body2"
+                  className="bg-yellow-300 text-gray-700 p-2 rounded"
+                >
+                  Limite de participoantes atingido, contate o suporte para
+                  liberar mais espaço para participantes.
+                </Typography>
+              )}
             </div>
           </Typography>
         </div>

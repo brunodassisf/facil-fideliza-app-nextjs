@@ -28,7 +28,7 @@ const Login: React.FC = () => {
   const handleCreateAccount = async (values: IInitialValues) => {
     setIsLoading(true);
     setBtnBlock(true);
-    await credentials(values)
+    await credentials({ ...values, role: "STORE" })
       .then((res) => {
         if (res?.ok) {
           router.push("/loja");

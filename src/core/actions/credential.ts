@@ -41,7 +41,7 @@ export const credentials = async (data: {
       },
     });
 
-    if (!user) {
+    if (!user || user.role !== data.role) {
       return { ok: false, message: "Usuário ou senha incorretos" };
     }
 
@@ -55,6 +55,10 @@ export const credentials = async (data: {
     session.phone = user.phone;
     session.email = user.email;
     session.role = user.role;
+
+    if (user.Store !== null) {
+      session.storeId = user.Store?.id;
+    }
 
     if (user.Client !== null) {
       const { Client } = user;
@@ -210,11 +214,29 @@ export const registerClient = async ({
         },
       });
 
-      if (!store) {
+      if (!store || !store.PlanStore) {
         return {
-          ok: true,
+          ok: false,
           message:
             "Essa loja não esta cadastrada, não e possível cadastrar um cliente",
+        };
+      }
+
+      if (
+        store?.PlanStore.amountClientsUse === store.PlanStore.Plan.amountClients
+      ) {
+        await conn.notification.create({
+          data: {
+            name: "Limite de cartãos alcançado",
+            message: `Um cliente tentou se cadastrar recentemente, mas você atingiu o limite de cartões disponíveis. Contate o suporte para liberar mais espaços de partipantes.`,
+            storeId: store.id,
+            icon: "ALERT",
+          },
+        });
+
+        return {
+          ok: false,
+          message: `A ${store.name} não possui cartões disponíveis no momento, informe a ${store.name} para liberar seu cadastro!`,
         };
       }
 
@@ -271,6 +293,15 @@ export const registerClient = async ({
         session.name = Client?.name;
         session.storeName = store?.name;
       }
+
+      await conn.notification.create({
+        data: {
+          name: "Novo participante cadastrado",
+          message: `O participante ${name} acabou de se cadastrar no seu programa de fidelidade!`,
+          storeId: store.id,
+          icon: "NEWUSER",
+        },
+      });
 
       await session.save();
 

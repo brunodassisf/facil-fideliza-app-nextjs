@@ -32,21 +32,22 @@ model Client {
 }
 
 model Store {
-  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
-  User                User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId              String     @unique @db.ObjectId
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  User                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String         @unique @db.ObjectId
   PlanStore           PlanStore?
-  tag                 String     @unique
-  name                String     @unique
+  tag                 String         @unique
+  name                String         @unique
   amountLoyaltyByCard Int?
   reward              String?
   bgColor             String?
   textColor           String?
-  cooldown            Int        @default(0)
+  cooldown            Int            @default(0)
   img                 String?
-  ready               Boolean    @default(false)
+  ready               Boolean        @default(false)
   Products            Product[]
   Clients             Client[]
+  Notification        Notification[]
 }
 
 model LoyaltyCard {
@@ -106,9 +107,26 @@ model Plan {
   PlanStore     PlanStore[]
 }
 
+model Notification {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId String   @db.ObjectId
+  Store   Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  view    Boolean  @default(true)
+  icon    Icon?
+  name    String
+  message String
+  date    DateTime @default(now())
+}
+
 enum Role {
   STORE
   CLIENT
+  ADMIN
+}
+
+enum Icon {
+  ALERT
+  NEWUSER
 }
 
 enum Score {

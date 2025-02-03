@@ -31,6 +31,30 @@ export const getStore = async () => {
   return store;
 };
 
+export const getStoreNotifications = async () => {
+  const session = await getSession();
+
+  const notification = await prisma.notification.findMany({
+    where: {
+      storeId: session.storeId,
+    },
+  });
+
+  return notification;
+};
+
+export const updateNotification = async (id: string) => {
+  await prisma.notification.update({
+    where: {
+      id,
+    },
+    data: {
+      view: false,
+    },
+  });
+  revalidatePath("/loja");
+};
+
 export async function getStoreByTag(tag: string) {
   const store = await prisma.store.findFirst({
     where: {

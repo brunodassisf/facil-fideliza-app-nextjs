@@ -15,6 +15,7 @@ import Spinner from "./Spinner";
 import ShareLink from "./ShareLink";
 import StyleTag from "./StyleTag";
 import NotFoundStore from "./NotFoundStore";
+import Notification from "./Notification";
 
 export {
   Button,
@@ -33,4 +34,5 @@ export {
   ShareLink,
   StyleTag,
   NotFoundStore,
+  Notification,
 };

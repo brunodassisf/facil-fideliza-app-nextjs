@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   const handleCreateAccount = async (values: IInitialValues) => {
     setIsLoading(true);
     setBtnBlock(true);
-    await credentials(values)
+    await credentials({ ...values, role: "CLIENT" })
       .then((res) => {
         if (res?.ok) {
           toast.success(res.message);

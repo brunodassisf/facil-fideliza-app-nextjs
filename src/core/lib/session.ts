@@ -8,6 +8,7 @@ export interface SessionData {
   role?: Role | undefined;
   name?: string;
   storeName?: string;
+  storeId?: string;
 }
 
 export type SessionStore = {
@@ -31,7 +32,7 @@ export type SessionStore = {
   role: Role;
 };
 
-type Role = "STORE" | "CLIENT";
+type Role = "STORE" | "CLIENT" | "ADMIN";
 
 export const sessionOptions: SessionOptions = {
   password: process.env.SECRET_KEY!,
