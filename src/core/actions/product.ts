@@ -1,5 +1,6 @@
 "use server";
 
+import { Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
 
@@ -9,14 +10,22 @@ type IResponse<T = undefined> = {
   data?: T;
 };
 
-export type Product = {
-  storeId: string | null;
-  name: string;
-  description: string | null;
-  price: string | number;
+export type IBeforeCreateProduct = Omit<
+  Product,
+  "storeId" | "id" | "updateAt"
+> & {
+  description: string;
+  type: null;
 };
 
-type UpdateProductDto = { id: string } & Product;
+export type IUpdateProduct = Omit<Product, "storeId" | "updateAt"> & {
+  description: string;
+  type: null;
+};
+
+export type ICreateProduct = Omit<Product, "id" | "updateAt">;
+
+type UpdateProductDto = Omit<Product, "updateAt"> & { id: string };
 export type ListProductDto = { id: string } & Product;
 
 export const createProduct = async ({
@@ -24,7 +33,8 @@ export const createProduct = async ({
   name,
   description,
   price,
-}: Product): Promise<IResponse | undefined> => {
+  type,
+}: ICreateProduct): Promise<IResponse | undefined> => {
   try {
     const result = await prisma.$transaction(async (conn) => {
       const hasSameProduct = await conn.product.findFirst({
@@ -48,13 +58,13 @@ export const createProduct = async ({
       );
 
       await conn.product.create({
-        data: { name, description, price: formatPrice, storeId },
+        data: { name, description, price: formatPrice, storeId, type },
       });
 
       revalidatePath("/loja");
       return {
         ok: true,
-        message: "Produto cadastrado com sucesso",
+        message: "Produto/serviço cadastrado com sucesso",
       };
     });
 
@@ -73,13 +83,13 @@ export const updateProduct = async (
   product: UpdateProductDto
 ): Promise<IResponse | undefined> => {
   try {
-    const { id, name, description, price } = product;
+    const { id, name, description, price, type } = product;
 
     const formatPrice = parseInt(price.toString().replace(/\D/g, "") || "", 10);
 
     await prisma.product.update({
       where: { id },
-      data: { name, description, price: formatPrice },
+      data: { name, description, price: formatPrice, type },
     });
 
     revalidatePath("/loja/produtos");

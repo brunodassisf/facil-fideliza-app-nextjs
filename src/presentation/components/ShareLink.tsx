@@ -26,12 +26,12 @@ const ShareLink: React.FC = () => {
             await navigator.clipboard.writeText(urlStore as string);
             setCopied("write-text");
             toast.info(
-              "Link copiado! Compartilhe o link personalizado com seus clientes."
+              "Link copiado! Compartilhe o link com seus partipantes."
             );
           }}
         >
           <Typography variant="caption" className="leading-6">
-            Compartilhe o link com seus clientes
+            Compartilhe o link com seus partipantes
           </Typography>
           <div className="text-blue-500 ">
             {copied === "write-text" ? "Link copiado!" : "Copiar link"}

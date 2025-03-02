@@ -12,7 +12,6 @@ type WrapperTagContext = {
   tag: string;
   name: string;
   amountLoyaltyByCard: number | null;
-  reward: string | null;
   bgColor: string | null;
   textColor: string | null;
   cooldown: number | null;

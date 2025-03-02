@@ -39,7 +39,6 @@ model Store {
   tag                 String         @unique
   name                String         @unique
   amountLoyaltyByCard Int?
-  reward              String?
   bgColor             String?
   textColor           String?
   cooldown            Int            @default(0)
@@ -63,30 +62,37 @@ model LoyaltyCard {
 }
 
 model Loyalty {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  LoyaltyCard     LoyaltyCard?      @relation(fields: [loyaltyCardId], references: [id], onDelete: Cascade)
-  loyaltyCardId   String?           @db.ObjectId
-  LoyaltyProducts LoyaltyProducts[]
-  createdAt       DateTime
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  LoyaltyCard   LoyaltyCard?   @relation(fields: [loyaltyCardId], references: [id], onDelete: Cascade)
+  loyaltyCardId String?        @db.ObjectId
+  LoyaltyItems  LoyaltyItems[]
+  createdAt     DateTime
 }
 
-model LoyaltyProducts {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId String  @db.ObjectId
-  amount    Int
-  loyalty   Loyalty @relation(fields: [loyaltyId], references: [id], onDelete: Cascade)
-  loyaltyId String  @db.ObjectId
+model LoyaltyItems {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String   @db.ObjectId
+  loyaltyId   String   @db.ObjectId
+  loyalty     Loyalty  @relation(fields: [loyaltyId], references: [id], onDelete: Cascade)
+  amount      Int
+  name        String
+  description String?
+  price       Int
+  type        Type?
+  createdAt   DateTime @default(now())
 }
 
 model Product {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  Store           Store?            @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  storeId         String?           @db.ObjectId
-  name            String
-  description     String?
-  price           Int
-  LoyaltyProducts LoyaltyProducts[]
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  Store        Store?         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId      String?        @db.ObjectId
+  name         String
+  description  String?
+  price        Int
+  type         Type?
+  updateAt     DateTime       @default(now())
+  LoyaltyItems LoyaltyItems[]
 }
 
 model PlanStore {
@@ -134,4 +140,9 @@ enum Score {
   Silver
   Gold
   Custom
+}
+
+enum Type {
+  PRODUCT
+  SERVICE
 }

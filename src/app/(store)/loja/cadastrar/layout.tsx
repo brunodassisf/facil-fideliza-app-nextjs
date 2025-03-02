@@ -5,7 +5,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const store = await getStore();
 
   return {
-    title: `${store?.name}, Cadastrar produto`,
+    title: `${store?.name}, Cadastrar produto/serviço`,
   };
 }
 

@@ -15,24 +15,25 @@ import {
 
 const tips = [
   {
-    title: "1. Cadastre um produto",
+    title: "1. Cadastre um produto.",
     icon: <FaCartFlatbed size={32} />,
   },
   {
-    title: "2. Customize sua loja",
+    title: "2. Personalizar sua loja.",
     icon: <FaShop size={32} />,
   },
   {
-    title: "3. Compartilhe o link para seus clientes fidelizazem",
+    title: "3. Compartilhe o link para seus clientes fidelizazem.",
     icon: <FaShareNodes size={32} />,
   },
   {
-    title: "4. A cada compra do cliente, marque uma fidelização",
+    title:
+      "4. A cada compra do cliente, adicionando os produtos/serviços que foram consumido e marque no cartão do seu participante.",
     icon: <FaCheck size={32} />,
   },
   {
     title:
-      "5. Quando o cliente completa seu cartão, você poderá entregar a recompensa e outro cartão será gerado para ele",
+      "5. Quando o cliente completa seu cartão, você poderá entregar a recompensa e outro cartão será gerado para ele.",
     icon: <FaGift size={32} />,
   },
 ];
@@ -46,7 +47,7 @@ export default function HomeStore() {
         <p>Em caso de dúvida, entre em contato conosco.</p>
         <Link
           target="_blank"
-          href="https://wa.me/5521982947600?text=Ol%C3%A1,%20gostaria%20de%20ajuda%20para%20configurar%20meu%20cart%C3%A3o%20de%20fidelidade!"
+          href="https://wa.me/5521992171142?text=Ol%C3%A1,%20gostaria%20de%20ajuda%20para%20configurar%20meu%20cart%C3%A3o%20de%20fidelidade!"
         >
           <div className="flex items-center gap-2 my-2">
             <FaWhatsapp size={22} />

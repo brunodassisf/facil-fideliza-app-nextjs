@@ -1,5 +1,5 @@
 import Create from "../../ui/Product/Create";
 
-export default async function CreateProductPage() {
+export default async function CreatePage() {
   return <Create />;
 }

@@ -1,21 +1,20 @@
 "use client";
 
-import { Textarea } from "@mui/joy";
 import { Divider, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { MuiColorInput } from "mui-color-input";
 import { useState } from "react";
+import InputColor from "react-input-color";
 import VMasker from "vanilla-masker";
 
-import { customizeSchema as validationSchema } from "../../../core/validation";
+import { updateStore } from "@/core/actions/store";
+import { useResourceStore } from "@/core/context/WrapperStore";
+import { toast } from "react-toastify";
+import { personalizeSchema as validationSchema } from "../../../core/validation";
 import {
   Button,
   ProgressBar,
   ShareLink,
 } from "../../../presentation/components";
-import { updateStore } from "@/core/actions/store";
-import { toast } from "react-toastify";
-import { useResourceStore } from "@/core/context/WrapperStore";
 
 const Personalize: React.FC = () => {
   const { store, setData } = useResourceStore();
@@ -24,7 +23,6 @@ const Personalize: React.FC = () => {
     bgColor: store?.bgColor || "",
     textColor: store?.textColor || "",
     amountLoyaltyByCard: store?.amountLoyaltyByCard || "",
-    reward: store?.reward || "",
   };
 
   type IInitialValues = typeof initialValues;
@@ -38,6 +36,7 @@ const Personalize: React.FC = () => {
       values.amountLoyaltyByCard as string,
       10
     );
+    console.log(values);
 
     await updateStore(store?.id as string, {
       ...values,
@@ -53,12 +52,11 @@ const Personalize: React.FC = () => {
       .finally(() => setIsLoading(false));
   };
 
-  const { values, errors, touched, handleChange, setFieldValue, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: handleSaveCostumize,
-    });
+  const { values, errors, touched, setFieldValue, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSaveCostumize,
+  });
 
   return (
     <>
@@ -80,41 +78,49 @@ const Personalize: React.FC = () => {
           <Typography variant="body2" className="pb-4">
             Escolha a cor de fundo da sua loja
           </Typography>
-          <MuiColorInput
-            fullWidth
-            format="hex"
-            value={values.bgColor}
-            onChange={(value) => {
-              setFieldValue("bgColor", value);
-              setData({
-                ...store,
-                bgColor: value,
-                Products: store?.Products ?? null,
-              });
-            }}
-            error={touched.bgColor && Boolean(errors.bgColor)}
-            helperText={touched.bgColor && errors.bgColor}
-          />
+          <div className="flex gap-2 items-start">
+            <InputColor
+              initialValue={values?.bgColor || "#83cbff"}
+              onChange={(color) => {
+                const modifiedColor = color.hex.slice(0, -2) + "ff";
+                setFieldValue("bgColor", modifiedColor);
+                setData({
+                  ...store,
+                  bgColor: modifiedColor,
+                  Products: store?.Products ?? null,
+                });
+              }}
+              placement="right"
+            />
+            <div className="border border-gray-300 rounded-md py-1 px-3">
+              <Typography variant="body2">{values.bgColor}</Typography>
+            </div>
+          </div>
         </div>
         <div>
           <Typography variant="body2" className="pb-4">
             Escolha a cor do texto da sua loja
           </Typography>
-          <MuiColorInput
-            fullWidth
-            format="hex"
-            value={values.textColor}
-            onChange={(value) => {
-              setFieldValue("textColor", value);
-              setData({
-                ...store,
-                textColor: value,
-                Products: store?.Products ?? null,
-              });
-            }}
-            error={touched.textColor && Boolean(errors.textColor)}
-            helperText={touched.textColor && errors.textColor}
-          />
+          <div className="flex gap-2 items-start">
+            <InputColor
+              initialValue={values?.textColor || "#000000"}
+              onChange={(color) => {
+                const modifiedColor = values?.textColor
+                  ? color.hex.slice(0, -2) + "ff"
+                  : "#000000";
+                setFieldValue("textColor", modifiedColor);
+                setData({
+                  ...store,
+                  textColor: modifiedColor,
+                  Products: store?.Products ?? null,
+                });
+              }}
+              placement="right"
+            />
+            <div className="border border-gray-300 rounded-md py-1 px-3">
+              <Typography variant="body2">{values.textColor}</Typography>
+            </div>
+          </div>
         </div>
         <div>
           <Typography variant="body2" className="pb-4">
@@ -140,21 +146,13 @@ const Personalize: React.FC = () => {
             }
           />
         </div>
-        <div>
+        {/* <div className="border rounded-md p-3">
           <Typography variant="body2" className="pb-4">
-            Digite a recompensa que seu participante receberá ao completar um
-            cartão. Exemplo: Um brinde ________..., um produto com desconto de
-            __%
+            Vizualize o exemplo da sua loja que será exibida para seus
+            participantes
           </Typography>
-          <Textarea
-            minRows={4}
-            placeholder="Um produto ou serviço com desconto, um produto ou serviço gratuito ..."
-            value={values.reward}
-            name="reward"
-            onChange={handleChange}
-            error={touched.reward && Boolean(errors.reward)}
-          />
-        </div>
+          <ViewCard />
+        </div> */}
         <Button fullWidth type="submit" variant="contained">
           Salvar
         </Button>

@@ -7,25 +7,25 @@ import { toast } from "react-toastify";
 import VMasker from "vanilla-masker";
 import { createProductSchema as validationSchema } from "../../../../core/validation";
 
-import { maskerMoney } from "../../../../core/util";
-import { Button, ProgressBar } from "@/presentation/components";
+import { createProduct, IBeforeCreateProduct } from "@/core/actions/product";
 import { useResourceStore } from "@/core/context/WrapperStore";
-import { createProduct } from "@/core/actions/product";
+import { IOpions } from "@/core/type";
+import { Button, ProgressBar, Select } from "@/presentation/components";
+import { maskerMoney } from "../../../../core/util";
 
 const initialValues = {
   name: "",
   description: "",
-  price: "",
+  price: 0,
+  type: null,
 };
-
-type IInitialValues = typeof initialValues;
 
 const Create: React.FC = () => {
   const { store } = useResourceStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleCreateProduct = async (
-    values: IInitialValues,
-    formik: FormikHelpers<IInitialValues>
+    values: IBeforeCreateProduct,
+    formik: FormikHelpers<IBeforeCreateProduct>
   ) => {
     setIsLoading(true);
     await createProduct({ ...values, storeId: store?.id as string })
@@ -47,14 +47,19 @@ const Create: React.FC = () => {
       onSubmit: handleCreateProduct,
     });
 
+  const typeOptions: IOpions[] = [
+    { label: "Produto", value: "PRODUCT" },
+    { label: "Serviço", value: "SERVICE" },
+  ];
+
   return (
     <>
       {isLoading && <ProgressBar />}
       <form onSubmit={handleSubmit} className="flex flex-col pt-4 gap-y-5">
-        <Typography variant="h6">Cadastrar produto</Typography>
+        <Typography variant="h6">Cadastrar produto/serviço</Typography>
         <TextField
           fullWidth
-          label="Nome do produto"
+          label="Nome"
           name="name"
           value={values.name}
           onChange={handleChange}
@@ -63,15 +68,23 @@ const Create: React.FC = () => {
         />
         <TextField
           fullWidth
-          label="Descrição do produto"
+          label="Descrição"
           name="description"
           value={values.description}
           onChange={handleChange}
         />
+        <Select
+          label="Tipo"
+          name="type"
+          value={values.type}
+          options={typeOptions}
+          onChange={(name, value) => setFieldValue(name, value)}
+          error={!!errors?.type && touched?.type ? errors.type : ""}
+        />
         <TextField
           fullWidth
           type="tel"
-          label="Preço do produto"
+          label="Preço"
           value={values.price}
           onChange={(ev) =>
             setFieldValue(

@@ -16,6 +16,7 @@ import ShareLink from "./ShareLink";
 import StyleTag from "./StyleTag";
 import NotFoundStore from "./NotFoundStore";
 import Notification from "./Notification";
+import RenderIcon from "./RenderIcon";
 
 export {
   Button,
@@ -35,4 +36,5 @@ export {
   StyleTag,
   NotFoundStore,
   Notification,
+  RenderIcon,
 };

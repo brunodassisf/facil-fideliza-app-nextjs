@@ -35,12 +35,12 @@ const Sidebar: React.FC<SidebarProps> = ({ type, tag }) => {
         link: "/loja/personalizar",
       },
       {
-        name: "Cadastrar produto",
-        link: "/loja/cadastrar-produto",
+        name: "Cadastrar produto/serviço",
+        link: "/loja/cadastrar",
       },
       {
-        name: "Meus produtos",
-        link: "/loja/produtos",
+        name: "Meus produtos/serviços",
+        link: "/loja/itens",
       },
       {
         name: "Fidelizar participante",

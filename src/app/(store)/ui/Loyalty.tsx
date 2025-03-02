@@ -1,5 +1,6 @@
 "use client";
 
+import { Textarea } from "@mui/joy";
 import {
   Dialog,
   DialogActions,
@@ -9,23 +10,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Textarea } from "@mui/joy";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import VMasker from "vanilla-masker";
-import { Product } from "../../../core/type";
 
+import { createLoyalty, updateLoyaltyCard } from "@/core/actions/loyalty";
+import { searchClient, SearchInfo } from "@/core/actions/user";
+import { useResourceStore } from "@/core/context/WrapperStore";
+import { Button, ProgressBar, RenderIcon } from "@/presentation/components";
+import { Product } from "@prisma/client";
+import Link from "next/link";
 import { FaMinus, FaPlus, FaTrash, FaXmark } from "react-icons/fa6";
-import { Button, ProgressBar } from "@/presentation/components";
 import {
-  getValueByAmount,
   getTotalValue,
+  getValueByAmount,
   maskerMoney,
 } from "../../../core/util";
-import { useResourceStore } from "@/core/context/WrapperStore";
-import Link from "next/link";
-import { searchClient, SearchInfo } from "@/core/actions/user";
-import { createLoyalty, updateLoyaltyCard } from "@/core/actions/loyalty";
 
 export type ProductLoaylty = Product & { amount: number };
 
@@ -189,7 +189,7 @@ const Loyalty: React.FC = () => {
                           variant="subtitle2"
                           className="border-b border-stone-400 py-2 mb-2"
                         >
-                          Selecione os produtos da compra
+                          Selecione os produtos/serviços da compra
                         </Typography>
                         <div className="max-h-60 overflow-y-scroll divide-y bg-emerald-200">
                           {store?.Products.filter((item) => {
@@ -208,7 +208,12 @@ const Loyalty: React.FC = () => {
                                 handleListProdutsByLoyalty(item as Product)
                               }
                             >
-                              {item.name}
+                              <>
+                                <span className="ml-2 font-bold">
+                                  {item.name}
+                                </span>
+                                <RenderIcon icon={item.type} />
+                              </>
                             </div>
                           ))}
                         </div>
@@ -234,27 +239,31 @@ const Loyalty: React.FC = () => {
                       key={item.id}
                       className="border border-stone-400 p-2 mb-4"
                     >
-                      <div className="flex justify-start mr-4 relative">
+                      <div className="flex justify-start mr-4 relative font-bold">
                         {item.amount}
-                        <span className="truncate ml-0.5">x {item.name}</span>
+                        <div className="w-full">
+                          <span className="truncate ml-0.5">x {item.name}</span>
+                          <div className="flex justify-between">
+                            <div className="flex items-center gap-4 mt-2">
+                              <FaPlus
+                                className="text-green-600"
+                                onClick={() => handleIncreaseAmount(item.id)}
+                              />
+                              <FaMinus
+                                className="text-blue-600"
+                                onClick={() =>
+                                  item.amount !== 1
+                                    ? handleDecreaseAmount(item.id)
+                                    : undefined
+                                }
+                              />
+                            </div>
+                            <RenderIcon icon={item.type} />
+                          </div>
+                        </div>
                         <FaTrash
                           className="text-red-600 absolute -right-5 cursor-pointer"
                           onClick={() => handleRemoveProductLoaylty(item.id)}
-                        />
-                      </div>
-                      <div className="flex items-center gap-4 mt-2">
-                        <FaPlus
-                          className="text-green-600"
-                          onClick={() => handleIncreaseAmount(item.id)}
-                        />
-
-                        <FaMinus
-                          className="text-blue-600"
-                          onClick={() =>
-                            item.amount !== 1
-                              ? handleDecreaseAmount(item.id)
-                              : undefined
-                          }
                         />
                       </div>
                     </div>
@@ -278,6 +287,7 @@ const Loyalty: React.FC = () => {
                 <div className="flex flex-col gap-y-5">
                   <TextField
                     fullWidth
+                    type="tel"
                     label="Telefone do participante"
                     value={phone}
                     onChange={(ev) =>
@@ -348,23 +358,28 @@ const Loyalty: React.FC = () => {
                       {item.amount}
                       <span className="truncate ml-0.5">x {item.name}</span>
                     </Typography>
-                    <strong>
+                    <div className="w-full flex justify-between items-center">
+                      <RenderIcon icon={item.type} />
+                      <strong>
+                        {VMasker.toMoney(
+                          getValueByAmount(item.price, item.amount),
+                          maskerMoney
+                        )}
+                      </strong>
+                    </div>
+                  </div>
+                ))}
+                <div className="w-full text-end">
+                  <Typography className="pt-2">
+                    Total:
+                    <strong className="ml-1">
                       {VMasker.toMoney(
-                        getValueByAmount(item.price, item.amount),
+                        getTotalValue(listProductsLoaylty),
                         maskerMoney
                       )}
                     </strong>
-                  </div>
-                ))}
-                <Typography className="pt-2">
-                  Total:
-                  <strong className="ml-1">
-                    {VMasker.toMoney(
-                      getTotalValue(listProductsLoaylty),
-                      maskerMoney
-                    )}
-                  </strong>
-                </Typography>
+                  </Typography>
+                </div>
               </div>
             </div>
           )}

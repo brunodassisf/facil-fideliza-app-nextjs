@@ -4,7 +4,7 @@ import { ProductLoaylty } from "@/app/(store)/ui/Loyalty";
 import prisma from "../lib/prisma";
 import { getDateTimeInTimezone } from "../util";
 import { getSession } from "./session";
-import { Loyalty, LoyaltyCard, LoyaltyProducts, Product } from "@prisma/client";
+import { Loyalty, LoyaltyCard, LoyaltyItems, Product } from "@prisma/client";
 
 type IResponse<T = undefined> = {
   ok: boolean;
@@ -14,10 +14,10 @@ type IResponse<T = undefined> = {
 
 export type ListProduct = {
   product: Product;
-} & LoyaltyProducts;
+} & LoyaltyItems;
 
 type LoyaltysProducts = {
-  LoyaltyProducts: ListProduct[];
+  LoyaltyItems: ListProduct[];
 } & Loyalty;
 
 export type UserCard = {
@@ -38,7 +38,7 @@ export const getLoyaltyCard = async (
       include: {
         loyaltys: {
           include: {
-            LoyaltyProducts: {
+            LoyaltyItems: {
               include: {
                 product: true,
               },
@@ -71,7 +71,7 @@ export const historyLoyaltyCards = async (): Promise<
       include: {
         loyaltys: {
           include: {
-            LoyaltyProducts: {
+            LoyaltyItems: {
               include: {
                 product: true,
               },
@@ -200,7 +200,7 @@ export const createLoyalty = async (
         loaylty.id
       );
 
-      await prisma.loyaltyProducts.createMany({
+      await prisma.loyaltyItems.createMany({
         data: products,
       });
 
@@ -251,6 +251,10 @@ const createLoyaltyProductsList = (
       amount: products[i].amount,
       productId: products[i].id,
       loyaltyId,
+      name: products[i].name,
+      description: products[i].description,
+      price: products[i].price,
+      type: products[i].type,
     });
   }
 

@@ -21,10 +21,6 @@ const StyleTag: React.FC<{
           .border-tag {
             border-color: ${textColor || "#000"} !important;
           }
-
-          .bg-tag {
-            background-color: ${bgColor || "#83cbff"} !important;
-          }
           
           .btn {
             background-color: ${bgColor || "#83cbff"} !important;

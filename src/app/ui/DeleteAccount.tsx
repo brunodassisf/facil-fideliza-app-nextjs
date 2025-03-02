@@ -11,9 +11,10 @@ import { useRouter } from "next/navigation";
 type DeleteAccountProps = {
   id: string;
   text: string;
+  tag?: string;
 };
 
-const DeleteAccount: React.FC<DeleteAccountProps> = ({ id, text }) => {
+const DeleteAccount: React.FC<DeleteAccountProps> = ({ id, text, tag }) => {
   const navigate = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,7 +29,11 @@ const DeleteAccount: React.FC<DeleteAccountProps> = ({ id, text }) => {
     await deleteAccount(id)
       .then((res) => {
         toast.success(res?.message);
-        navigate.push("/");
+        if (tag) {
+          navigate.push(`/${tag}`);
+        } else {
+          navigate.push("/");
+        }
       })
       .finally(() => setIsLoading(false));
   };

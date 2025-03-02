@@ -57,14 +57,14 @@ export const signIpSchema = yup.object().shape({
     .min(6, "Senha deve ter pelo menos 6 caracteres"),
 });
 
-export const customizeSchema = yup.object().shape({
+export const personalizeSchema = yup.object().shape({
   bgColor: yup
     .string()
     .trim()
     .required("Nome obrigatório")
     .min(3, "Nome deve ter pelo menos 3 caracteres")
     .test("hexColorValid", "Cor inválida", (value) => {
-      const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+      const hexRegex = /^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
       return hexRegex.test(value);
     }),
   textColor: yup
@@ -73,18 +73,13 @@ export const customizeSchema = yup.object().shape({
     .required("Nome obrigatório")
     .min(3, "Nome deve ter pelo menos 3 caracteres")
     .test("hexColorValid", "Cor inválida", (value) => {
-      const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+      const hexRegex = /^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
       return hexRegex.test(value);
     }),
   amountLoyaltyByCard: yup
     .string()
     .min(1, "Quantidade obrigatória")
     .required("Preço obrigatório"),
-  reward: yup
-    .string()
-    .trim()
-    .min(1, "Recompensa obrigatória")
-    .required("Recompensa obrigatório"),
 });
 
 export const createProductSchema = yup.object().shape({
@@ -99,9 +94,10 @@ export const createProductSchema = yup.object().shape({
     .required("Preço obrigatório")
     .test("testPhone", "Preço inválido", (value) => {
       const num = VMasker.toNumber(value);
-      if (num === "000") {
+      if (num === "0") {
         return false;
       }
       return true;
     }),
+  type: yup.string().required("Tipo obrigatório"),
 });

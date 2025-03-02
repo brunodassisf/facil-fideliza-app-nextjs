@@ -7,28 +7,31 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import VMasker from "vanilla-masker";
 
-import { IOpions, Product } from "../../../../core/type";
-import { maskerMoney } from "../../../../core/util";
-import { createProductSchema as validationSchema } from "../../../../core/validation";
-import { Button, ProgressBar, Select } from "@/presentation/components";
+import {
+  deleteProduct,
+  IUpdateProduct,
+  ListProductDto,
+  updateProduct,
+} from "@/core/actions/product";
 import { useResourceStore } from "@/core/context/WrapperStore";
 import {
-  updateProduct,
-  deleteProduct,
-  ListProductDto,
-} from "@/core/actions/product";
+  Button,
+  ProgressBar,
+  RenderIcon,
+  Select,
+} from "@/presentation/components";
+import { Product } from "@prisma/client";
+import { IOpions } from "../../../../core/type";
+import { maskerMoney } from "../../../../core/util";
+import { createProductSchema as validationSchema } from "../../../../core/validation";
 
 const initialValues = {
   id: "",
   name: "",
   description: "",
-  price: "",
+  price: 0,
+  type: null,
 };
-
-type IInitialValues = typeof initialValues & {
-  description: string | null;
-};
-
 type ListProps = {
   data: ListProductDto[] | null;
 };
@@ -52,8 +55,8 @@ const List: React.FC<ListProps> = ({ data }) => {
   }, [data]);
 
   const handleUpdated = async (
-    values: IInitialValues,
-    formikHelpers: FormikHelpers<IInitialValues>
+    values: IUpdateProduct,
+    formikHelpers: FormikHelpers<IUpdateProduct>
   ) => {
     setIsLoading(true);
     await updateProduct({ ...values, storeId: store?.id as string })
@@ -87,6 +90,7 @@ const List: React.FC<ListProps> = ({ data }) => {
         "price",
         VMasker.toMoney(initial?.price as number, maskerMoney)
       );
+      setFieldValue("type", initial?.type);
     }
   }, [selectProduct, products, setFieldValue]);
 
@@ -104,16 +108,21 @@ const List: React.FC<ListProps> = ({ data }) => {
       .finally(() => setIsLoading(false));
   };
 
+  const typeOptions: IOpions[] = [
+    { label: "Produto", value: "PRODUCT" },
+    { label: "Serviço", value: "SERVICE" },
+  ];
+
   return (
     <>
       {isLoading ? <ProgressBar /> : null}
       <div className="flex flex-col gap-y-2 mt-2">
         <Typography variant="h6" className="p-1">
-          Meus produtos
+          Meus produtos/serviços
         </Typography>
         {products && products?.length > 0 ? (
           <Select
-            label="Buscar produto"
+            label="Buscar"
             value={selectProduct}
             options={products || []}
             onChange={(_name, value) => setSelectProduct(value)}
@@ -138,18 +147,18 @@ const List: React.FC<ListProps> = ({ data }) => {
                       onSubmit={handleSubmit}
                       className="flex flex-col gap-y-7"
                     >
+                      <RenderIcon icon={values.type} />
                       <TextField
                         fullWidth
-                        label="Nome do produto"
+                        label="Nome"
                         name="name"
                         value={values.name}
                         onChange={handleChange}
                         error={!!errors?.name && touched?.name}
-                        helperText={errors?.name}
                       />
                       <TextField
                         fullWidth
-                        label="Descrição do produto"
+                        label="Descrição"
                         name="description"
                         value={values.description}
                         onChange={handleChange}
@@ -157,7 +166,7 @@ const List: React.FC<ListProps> = ({ data }) => {
                       <TextField
                         fullWidth
                         type="tel"
-                        label="Preço do produto"
+                        label="Preço"
                         value={values.price}
                         onChange={(ev) =>
                           setFieldValue(
@@ -167,6 +176,13 @@ const List: React.FC<ListProps> = ({ data }) => {
                         }
                         error={!!errors?.price && touched?.price}
                         helperText={errors?.price}
+                      />
+                      <Select
+                        label="Tipo"
+                        name="type"
+                        value={values.type}
+                        options={typeOptions}
+                        onChange={(name, value) => setFieldValue(name, value)}
                       />
                       <div className="flex justify-center gap-4">
                         <Button

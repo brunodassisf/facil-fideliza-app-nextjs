@@ -108,7 +108,7 @@ const History: React.FC<HistoryProps> = ({ data }) => {
                 </span>
               </Typography>
               <div className="mt-2">
-                {item.LoyaltyProducts.map((product) => (
+                {item.LoyaltyItems.map((product) => (
                   <div key={product.id}>
                     <Typography variant="subtitle2" className="truncate">
                       {product.amount} x {product.product.name}

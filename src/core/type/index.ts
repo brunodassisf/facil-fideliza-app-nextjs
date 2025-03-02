@@ -1,4 +1,4 @@
-import { Client, Loyalty, LoyaltyCard, LoyaltyProducts } from "@prisma/client";
+import { Client, Loyalty, LoyaltyCard, LoyaltyItems } from "@prisma/client";
 
 export const COOKIE_ACCESS_USER = "userData";
 export const COOKIE_ACCESS_STORE = "storeAccess";
@@ -68,10 +68,10 @@ export type Product = {
 
 type HistotyLoyaltyProducts = {
   product: Product;
-} & LoyaltyProducts;
+} & LoyaltyItems;
 
 export type HistoryLoyalty = {
-  LoyaltyProducts: HistotyLoyaltyProducts[];
+  LoyaltyItems: HistotyLoyaltyProducts[];
 } & Loyalty;
 
 export type HistoryData =

@@ -42,7 +42,7 @@ export default async function RootLayout({
   return (
     <section className="h-screen">
       <WrapperStore data={store}>
-        <div className="flex justify-between items-start pt-16 pb-10">
+        <div className="flex justify-between items-start pt-5 pb-10">
           <div>
             <Typography variant="h6">
               Bem-vindo,
@@ -79,7 +79,7 @@ export default async function RootLayout({
                   variant="body2"
                   className="bg-yellow-300 text-gray-700 p-2 rounded"
                 >
-                  Limite de participoantes atingido, contate o suporte para
+                  Limite de participantes atingido, contate o suporte para
                   liberar mais espaço para participantes.
                 </Typography>
               )}

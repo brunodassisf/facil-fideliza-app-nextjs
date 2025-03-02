@@ -12,7 +12,7 @@ import {
 import { UserCard } from "@/core/actions/loyalty";
 import { reloadPage } from "@/core/actions/user";
 import { useTag } from "@/core/context/WrapperTag";
-import { Button } from "@/presentation/components";
+import { Button, RenderIcon } from "@/presentation/components";
 import { useEffect, useState } from "react";
 import ButtonHelper from "./ButtonHelper";
 
@@ -23,6 +23,8 @@ type DashboardProps = {
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   const { tag } = useTag();
   const [loayltyCard, setLoyaltyCard] = useState<UserCard | null>(null);
+
+  console.log(data);
 
   useEffect(() => {
     setLoyaltyCard(data as UserCard);
@@ -93,28 +95,39 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         </div>
         <div className="mt-5 max-h-52 overflow-y-scroll">
           {loayltyCard?.loyaltys.map((loyalty) => (
-            <div key={loyalty.id} className="border-b mb-3 pb-1">
+            <div key={loyalty.id} className="mb-3 bg-gray-300 p-2 rounded-md">
               <div>
                 <Typography variant="caption">
                   {formatDateTime(loyalty.createdAt.toString())}
                 </Typography>
-                {loyalty.LoyaltyProducts.map((product) => (
-                  <Typography
+                {loyalty.LoyaltyItems.map((product) => (
+                  <div
                     key={product.id}
-                    variant="body2"
-                    className="truncate"
+                    className="mt-2 bg-slate-100 p-2 rounded-lg"
                   >
-                    {product.amount} x {product.product.name}
-                  </Typography>
+                    <Typography variant="body2" className="truncate">
+                      {product.amount} x {product.product.name}
+                    </Typography>
+                    <div className="flex items-center justify-between gap-1">
+                      <RenderIcon icon={product.product.type} />
+
+                      {VMasker.toMoney(
+                        product.product.price * product.amount,
+                        maskerMoney
+                      )}
+                    </div>
+                  </div>
                 ))}
-                <Typography variant="body2" className="text-end">
-                  <strong>
-                    {VMasker.toMoney(
-                      getTotalValueCard(loyalty.LoyaltyProducts),
-                      maskerMoney
-                    )}
-                  </strong>
-                </Typography>
+                <div className="pr-2 mt-2">
+                  <Typography variant="body1" className="text-end">
+                    <strong>
+                      {VMasker.toMoney(
+                        getTotalValueCard(loyalty.LoyaltyItems),
+                        maskerMoney
+                      )}
+                    </strong>
+                  </Typography>
+                </div>
               </div>
             </div>
           ))}
