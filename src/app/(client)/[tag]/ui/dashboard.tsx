@@ -72,7 +72,8 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
       {loayltyCard?.loyaltys.length === 0 && (
         <div className="my-5">
           <Typography variant="subtitle2" className="bg-yellow-300 p-2 rounded">
-            Você ainda não possui fidelizações, compre e comece já!
+            Seu cartão estão vazio, compre e junte fidelizações para ganhar
+            recompensas!
           </Typography>
         </div>
       )}

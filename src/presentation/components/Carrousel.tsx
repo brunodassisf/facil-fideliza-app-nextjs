@@ -14,7 +14,7 @@ const Carrousel: React.FC<CarrouselProps> = ({ children }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
   };
   return (
     <div className="container m-auto">

@@ -11,33 +11,32 @@ const arrCarrousel = [
     title: "Começando!",
     text: "Essa parte é necessária para que você crie a conta da sua loja!",
     link: "/cadastro",
-    textLink: "Criar minha loja",
+    textLink: "Criar conta",
   },
   {
     img: "02",
     title: "Primeiro passo",
-    text: "Aqui você confere quantos participantes sua loja tem cadastrados, consegue colocar sua logo. Em caso de dúvida, bastante entrar em contato conosco!",
+    text: "Aqui você confere quantos participantes sua loja tem cadastrados. Em caso de dúvida, bastante entrar em contato conosco!",
   },
   {
     img: "03",
     title: "Menu",
     text: `No menu você acessará recursos muitos importantes para te
-          ajudar, como personalizar seu site, cadastrar produtos, listar seus
-          produtos onde você poderá excluir ou editar eles, assim como
+          ajudar, como personalizar seu site, cadastrar produtos/serviços, listar seus
+          produtos/serviços onde você poderá excluir ou editar eles, assim como
           fidelizar com seus participantes.`,
   },
   {
     img: "04",
-    title: "Personalize como quiser",
+    title: "Personalize com a sua cara!",
     text: `Aqui você irá configurar como sua loja aparecerá para seus
           participantes. Desde a cor de fundo do seu app, quantidade
-          de fidelizações que cada cliente fará em seus cartões e cadastrar uma recompensa
-          para eles.`,
+          de fidelizações que cada cliente faram em seus cartões!`,
   },
   {
     img: "05",
-    title: "Adicione produtos",
-    text: `Aqui você irá adicionar seus produtos, eles serão usados na
+    title: "Adicione produtos/serviço",
+    text: `Aqui você irá adicionar seus produtos/serviços, eles serão usados na
           fidelização.`,
   },
   {
@@ -54,7 +53,7 @@ const arrCarrousel = [
   {
     img: "08",
     title: "Meu cartão da loja!",
-    text: `Quando seus participantes acessarem o site, verão o seuc artão sendo preenchido a cada compra que você registrar.`,
+    text: `Quando seus participantes acessarem o site, verão o seu cartão sendo preenchido a cada compra que você registrar.`,
   },
   {
     img: "09",
@@ -148,7 +147,7 @@ const Home: React.FC = () => {
               <div key={index}>
                 <div className="flex flex-col md:flex-row justify-center items-center gap-x-4">
                   <Image
-                    src={`/imagens/${item.img}.png`}
+                    src={`/imagens/${item.img}.jpg`}
                     alt="logo"
                     className=" border-4 border-sky-900/20 rounded-2xl"
                     width={200}
