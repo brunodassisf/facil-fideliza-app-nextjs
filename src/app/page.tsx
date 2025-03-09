@@ -128,7 +128,7 @@ const Home: React.FC = () => {
                 fullWidth
                 component={Link}
                 formTarget="_blank"
-                href="https://wa.me/5521982947600?text=Olá, quero tirar dúividas sobre o aplicativo de fidelização!"
+                href="https://wa.me/5521992171142?text=Olá, quero tirar dúividas sobre o aplicativo de fidelização!"
               >
                 <div className="flex gap-x-2 py-1">
                   <FaWhatsapp size={22} />
