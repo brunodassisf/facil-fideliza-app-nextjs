@@ -226,7 +226,7 @@ const Loyalty: React.FC = () => {
                         Você não tem produtos cadastrados para prosseguir,
                         cadastre seus produtos
                         <Link
-                          href="/loja/cadastrar-produto"
+                          href="/loja/cadastrar"
                           className="underline text-blue-700 ml-1"
                         >
                           aqui

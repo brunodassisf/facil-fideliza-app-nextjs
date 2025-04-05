@@ -21,6 +21,7 @@ export async function generateMetadata({
     openGraph: {
       url: `${process.env.NEXT_PUBLIC_URL_APP}${store?.tag}`,
       description: `Participe e ganhe vantagens exclusivas com a ${store?.name}!`,
+      images: [`${process.env.NEXT_PUBLIC_URL_BASE_AWS}facilfidelizar.png`],
     },
   };
 }

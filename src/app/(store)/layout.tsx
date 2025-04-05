@@ -6,16 +6,12 @@ import type { Metadata, Viewport } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const store = await getStore();
-  const img = store?.img
-    ? process.env.NEXT_PUBLIC_URL_BASE_AWS! + store.img
-    : process.env.NEXT_PUBLIC_URL_BASE_AWS! + "facilfidelizar.png";
 
   return {
     title: `${store?.name} - Bem-vindo`,
-
     openGraph: {
       url: `${process.env.NEXT_PUBLIC_URL_APP}/loja`,
-      images: [img],
+      images: [`${process.env.NEXT_PUBLIC_URL_BASE_AWS}facilfidelizar.png`],
     },
   };
 }
